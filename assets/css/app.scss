@@ -1,0 +1,18 @@
+/*!
+ * iCare about my Data v1.0
+ * Copyright 2023 iCare about my Data
+ */
+ html,body{
+    margin:0;
+    padding:0;
+    height:100%;
+}
+*{
+    box-sizing:border-box;
+}
+body{
+    overflow-x:hidden;
+    background-image:url('../img/home/wallpaper.png');
+    background-repeat:no-repeat;
+    background-size:cover;
+}
