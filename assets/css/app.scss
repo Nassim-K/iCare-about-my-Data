@@ -1,8 +1,16 @@
+@import '../css/bootstrap/bootstrap-grid.min.css';
+@font-face {
+    font-family: 'SF Pro Display';
+    font-weight: 400;
+    font-style: normal;
+    src: url('../dist/fonts/sf-pro-display/sf-pro-display_semibold.woff2') format('woff2');
+}
+
 /*!
  * iCare about my Data v1.0
  * Copyright 2023 iCare about my Data
  */
- html,body{
+html,body{
     margin:0;
     padding:0;
     height:100%;
@@ -13,6 +21,46 @@
 body{
     overflow-x:hidden;
     background-image:url('../img/home/wallpaper.png');
+    background-position:center;
     background-repeat:no-repeat;
     background-size:cover;
+    font-family:"SF Pro Display","Helvetica Neue","Helvetica","Arial","sans-serif";
+}
+.home{
+    .fixed-bar{
+        position:fixed;
+        height:110px;
+        bottom:50px;
+        left:50%;
+        transform:translateX(-50%);
+        background-color:rgba(255,255,255,.5);
+        backdrop-filter:saturate(180%) blur(20px);
+        border-radius:30px;
+    }
+    .wrapper{
+        width:1170px;
+        margin:80px auto;
+    }
+    .app-icon{
+        width:80px;
+        height:80px;
+        background-image:url('../img/home/icons/app-store.png');
+        background-position:center;
+        background-repeat:no-repeat;
+        background-size:cover;
+    }
+    .app-title{
+        display:block;
+        margin-top:5px;
+        color:#fff;
+    }
+}
+.black{
+    width:100%;
+    height:170px;
+    background-color:black;
+    border-radius:20px;
+    &.black-2{
+        height:364px;
+    }
 }
