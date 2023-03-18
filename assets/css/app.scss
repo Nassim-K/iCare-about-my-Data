@@ -3,7 +3,7 @@
     font-family: 'SF Pro Display';
     font-weight: 400;
     font-style: normal;
-    src: url('../dist/fonts/sf-pro-display/sf-pro-display_semibold.woff2') format('woff2');
+    src: url('../fonts/sf-pro-display/sf-pro-display_semibold.woff2') format('woff2');
 }
 
 /*!
@@ -36,10 +36,22 @@ body{
         background-color:rgba(255,255,255,.5);
         backdrop-filter:saturate(180%) blur(20px);
         border-radius:30px;
+        opacity:0;
+        transition:all 1s ease-in-out;
     }
-    .wrapper{
-        width:1170px;
-        margin:80px auto;
+    .home-content{
+        position:fixed;
+        display:flex;
+        height:calc(100% - 160px);
+        width:100%;
+        justify-content:center;
+        align-items:center;
+        transform:scale(3);
+        opacity:0;
+        transition:all .5s ease-in-out;
+        .wrapper{
+            width:1170px;
+        }
     }
     .app-icon{
         width:80px;
