@@ -1,7 +1,9 @@
 {
   "devDependencies": {
+    "css-loader": "^6.7.3",
     "file-loader": "^6.2.0",
     "sass-loader": "^13.2.0",
+    "style-loader": "^3.3.2",
     "webpack": "^5.75.0",
     "webpack-cli": "^5.0.1"
   },
@@ -10,6 +12,10 @@
     "build": "webpack"
   },
   "dependencies": {
-    "jquery": "^3.6.3"
+    "@geoman-io/leaflet-geoman-free": "^2.14.2",
+    "jquery": "^3.6.3",
+    "leaflet": "^1.9.3",
+    "leaflet-defaulticon-compatibility": "^0.1.1",
+    "leaflet.markercluster": "^1.5.3"
   }
 }
