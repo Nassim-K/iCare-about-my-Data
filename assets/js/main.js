@@ -8,7 +8,9 @@ let longitude = null;
 let address;
 let source;
 
-const apps = ['.home', '.app1'];
+const apps = ['.welcome', '.home', '.app1', '#intro-video'];
+const introVideo = document.getElementById("intro-video");
+const welcomeBtn = document.getElementById("welcome-start");
 
 async function getCurrentPosition() {
     return new Promise(async (resolve, reject) => {
@@ -23,8 +25,12 @@ async function getCurrentPosition() {
             const addressData = await addressResponse.json();
             const city = addressData.address.town || addressData.address.city || addressData.address.village || "Unknown";
             address = `${addressData.address.road}, ${city}, ${addressData.address.state}, ${addressData.address.country}`;
-            resolve({address,source});
+            resolve({
+                address,
+                source
+            });
         } catch (error) {
+            alert("Pour le bon déroulement du Webdoc, veuillez activer la localisation dans votre navigateur.");
             try {
                 const response = await fetch("https://ipapi.co/json/");
                 const data = await response.json();
@@ -35,7 +41,10 @@ async function getCurrentPosition() {
                 const addressData = await addressResponse.json();
                 const city = addressData.address.town || addressData.address.city || addressData.address.village || "Unknown";
                 address = `${addressData.address.road}, ${city}, ${addressData.address.state}, ${addressData.address.country}`;
-                resolve({address,source});
+                resolve({
+                    address,
+                    source
+                });
             } catch (error) {
                 reject("Une erreur est survenue lors de la récupération de la position.");
             }
@@ -66,6 +75,7 @@ async function createMapWidget() {
     }
 }
 
+// todo
 async function createWeatherWidget() {
     try {
         const apiKey = "70cd7ed3d8d342bea42ea9eb0efda8c9";
@@ -106,28 +116,29 @@ function launchHome() {
     });
 }
 
-$(document).ready(function () {
-    const introVideo = document.getElementById("intro-video");
-    //introVideo.play();
+$(document).on('ready', function () {
 
-    introVideo.addEventListener("ended", function () {
-        introVideo.remove();
+    launchApp('.welcome');
+    getCurrentPosition();
 
-        launchHome();
+    welcomeBtn.addEventListener("click", function () {
+        //launchApp('#intro-video');
+        //introVideo.play();
 
-        getCurrentPosition().then(() => {
+        //introVideo.addEventListener("ended", function () {
+            launchHome();
+
             createMapWidget();
             createWeatherWidget();
-        }).catch(error => {
-            console.error(error);
-        });
-    
-        $(".app-icon").click(function() {
-            launchApp('.app1');
-        });
-        $(".app1").click(function() {
-            launchHome();
-        });
-        
+
+            $(".app-icon").on('click', function () {
+                launchApp('.app1');
+            });
+            $(".app1").on('click', function () {
+                launchHome();
+            });
+
+        //});
     });
+
 });
