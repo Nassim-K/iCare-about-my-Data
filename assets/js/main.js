@@ -116,16 +116,47 @@ function launchHome() {
     });
 }
 
-$(document).on('ready', function () {
+$(document).ready(function () {
 
+    if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
+        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.lang = 'fr-FR';
+        
+        recognition.onstart = function() {
+          console.log("La reconnaissance vocale a démarré.");
+        }
+        
+        recognition.onresult = function(event) {
+          const result = event.results[0][0].transcript;
+          console.log("Vous avez dit : " + result);
+        }
+        
+        recognition.onerror = function(event) {
+          console.error("Erreur de reconnaissance vocale : " + event.error);
+        }
+        
+        recognition.onend = function() {
+          console.log("La reconnaissance vocale s'est terminée.");
+        }
+        
+        //const startButton = document.getElementById("start-button");
+        
+        //welcomeBtn.addEventListener("click", function() {
+          recognition.start();
+        //});
+        
+      } else {
+        console.error("La reconnaissance vocale n'est pas supportée sur ce navigateur.");
+      } 
+    /*
     launchApp('.welcome');
     getCurrentPosition();
 
     welcomeBtn.addEventListener("click", function () {
-        //launchApp('#intro-video');
-        //introVideo.play();
+        launchApp('#intro-video');
+        introVideo.play();
 
-        //introVideo.addEventListener("ended", function () {
+        introVideo.addEventListener("ended", function () {
             launchHome();
 
             createMapWidget();
@@ -138,7 +169,7 @@ $(document).on('ready', function () {
                 launchHome();
             });
 
-        //});
-    });
+        });
+    });*/
 
 });
