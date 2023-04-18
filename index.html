@@ -6,14 +6,15 @@
     <link rel="stylesheet" href="./dist/css/app.min.css">
 </head>
 <body>
+    <span id="back-home-btn" class="hidden"><< Revenir à l'accueil</span>
     <div class="app welcome">
         <button id="welcome-start">START</button>
     </div>
-    <video id="intro-video" src="./dist/video/intro.mp4"></video>
-    <div class="home">
+    <video class="app intro-video" id="intro-video" src="./dist/video/intro.mp4"></video>
+    <div class="app home">
         <div class="fixed-bar row">
             <div class="col d-flex flex-column justify-content-center align-items-center">
-                <div class="app-icon video"></div>
+                <div class="app-icon intro-video"></div>
             </div>
             <div class="col d-flex flex-column justify-content-center align-items-center">
                 <div class="app-icon tiktok"></div>
@@ -59,8 +60,8 @@
                 </div>
                 <div class="row mb-4">
                     <div class="col-2 d-flex flex-column justify-content-center align-items-center">
-                        <div class="app-icon video"></div>
-                        <span class="app-title video">Introduction</span>
+                        <div class="app-icon intro-video"></div>
+                        <span class="app-title intro-video">Introduction</span>
                     </div>
                     <div class="col-2 d-flex flex-column justify-content-center align-items-center">
                         <div class="app-icon tiktok"></div>
@@ -112,7 +113,12 @@
             </div>
         </div>
     </div>
-    <div class="app app1"></div>
+    <div class="app maps">
+        <div id="map1" style="height: 100%;"></div>
+        <div class="sidepanel">
+            coucou
+        </div>
+    </div>
 	<script src="./dist/bundle.js"></script>
 </body>
 </html>

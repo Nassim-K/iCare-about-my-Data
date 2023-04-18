@@ -8,9 +8,10 @@ let longitude = null;
 let address;
 let source;
 
-const apps = ['.welcome', '.home', '.app1', '#intro-video'];
+const apps = ['.welcome', '#intro-video', '.home', '.maps'];
 const introVideo = document.getElementById("intro-video");
 const welcomeBtn = document.getElementById("welcome-start");
+const backHomeBtn = $(".back-home-btn");
 
 async function getCurrentPosition() {
     return new Promise(async (resolve, reject) => {
@@ -52,11 +53,15 @@ async function getCurrentPosition() {
     });
 }
 
-async function createMapWidget() {
+async function createMap(mapId) {
     try {
-        var map = L.map('map', {
-            zoomControl: false
-        }).setView([latitude, longitude], 13);
+        if(mapId == 'map'){
+            var map = L.map(mapId, {
+                zoomControl: false
+            }).setView([latitude, longitude], 13);
+        }else{
+            var map = L.map(mapId).setView([latitude, longitude], 13);
+        }
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
         map.attributionControl.setPrefix('');
         var newIcon = L.icon({
@@ -69,7 +74,17 @@ async function createMapWidget() {
             icon: newIcon
         }).addTo(map);
         marker.bindPopup("<b>Votre localisation " + (source === "ip" ? "IP" : "navigateur") + " : <br>" + address + "</b>").openPopup();
-        map.dragging.disable();
+        if(mapId == 'map1'){
+            map.zoomControl.setPosition('topleft');
+            L.control.scale().addTo(map);
+        }else{
+            map.dragging.disable();
+            map.touchZoom.disable();
+            map.doubleClickZoom.disable();
+            map.scrollWheelZoom.disable();
+            map.boxZoom.disable();
+            map.keyboard.disable();
+        }
     } catch (error) {
         console.error(error);
     }
@@ -93,7 +108,7 @@ async function createWeatherWidget() {
 
 function launchApp(app) {
     apps.forEach(app => {
-        $(app).hide();
+        $(".app"+app).hide();
     });
     $(".home-content").css({
         transform: "scale(3)",
@@ -102,7 +117,23 @@ function launchApp(app) {
     $(".fixed-bar").css({
         opacity: "0",
     });
+    if(['.welcome', '#intro-video', '.home'].includes(app)){
+        $(backHomeBtn).addClass('hidden'); // TODO ne fonctionne pas :(
+    }else{
+        $(backHomeBtn).removeClass('hidden');
+    }
     $(app).show();
+    switch(app){
+        case '.intro-video':
+            introVideo.play();
+            introVideo.addEventListener("ended", function () {
+                launchHome();
+            });
+            break;
+        case '.maps':
+            createMap('map1');
+            break;
+    }
 }
 
 function launchHome() {
@@ -118,7 +149,7 @@ function launchHome() {
 
 $(document).ready(function () {
 
-    if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
+    /*if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
         const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
         recognition.lang = 'fr-FR';
         
@@ -147,29 +178,31 @@ $(document).ready(function () {
         
       } else {
         console.error("La reconnaissance vocale n'est pas supportée sur ce navigateur.");
-      } 
-    /*
+      } */
+    
     launchApp('.welcome');
     getCurrentPosition();
 
     welcomeBtn.addEventListener("click", function () {
-        launchApp('#intro-video');
-        introVideo.play();
+        //launchApp('#intro-video');
+        //introVideo.play();
 
-        introVideo.addEventListener("ended", function () {
+        //introVideo.addEventListener("ended", function () {
             launchHome();
 
-            createMapWidget();
+            // laisser la puisque je le fais qu'une fois au lancement
+            createMap('map');
             createWeatherWidget();
 
             $(".app-icon").on('click', function () {
-                launchApp('.app1');
-            });
-            $(".app1").on('click', function () {
-                launchHome();
-            });
+                launchApp("."+$(this).attr('class').replace('app-icon ',''));
 
-        });
-    });*/
+            });
+            /*$(".app1").on('click', function () {
+                launchHome();
+            });*/
+
+        //});
+    });
 
 });
