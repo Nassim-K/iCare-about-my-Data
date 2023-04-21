@@ -6,9 +6,29 @@
     <link rel="stylesheet" href="./dist/css/app.min.css">
 </head>
 <body>
-    <span id="back-home-btn" class="hidden"><< Revenir à l'accueil</span>
+    <!--<span id="back-home-btn" class="hidden"><< Revenir à l'accueil</span>-->
     <div class="app welcome">
-        <button id="welcome-start">START</button>
+        <span class="welcome-text welcome-bienvenue">Bienvenue</span>
+        <span class="welcome-text welcome-title">iCare about my Data</span>
+        <div class="row">
+            <div class="col">
+                <i class="bi bi-code-slash"></i>
+                <span class="welcome-subtext">Webdoc optimisé pour Google Chrome, version PC uniquement</span>
+            </div>
+            <div class="col">
+                <i class="bi bi-geo-alt"></i>
+                <span class="welcome-subtext">Autorisez l'accès à votre localisation<br>(message en haut à gauche)</span>
+            </div>
+            <div class="col">
+                <i class="bi bi-headset"></i>
+                <span class="welcome-subtext">Vérifier la présence d'un micro sur votre machine<br></span>
+            </div>
+            <div class="col">
+                <i class="bi bi-mic"></i>
+                <span class="welcome-subtext">Autorisez l'accès à votre micro<br>(message en haut à gauche)</span>
+            </div>
+        </div>
+        <button id="welcome-start">Commencer</button>
     </div>
     <video class="app intro-video" id="intro-video" src="./dist/video/intro.mp4"></video>
     <div class="app home">
