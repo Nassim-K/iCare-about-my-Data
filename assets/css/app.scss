@@ -7,6 +7,8 @@
     src: url('../fonts/sf-pro/SF-Pro.ttf');
 }
 
+$blue : #0068f9;
+
 /*!
  * iCare about my Data v1.0
  * Copyright 2023 iCare about my Data
@@ -49,50 +51,94 @@ body{
     height: 100%;
     position: fixed;
     &.welcome{
-        background: linear-gradient(-45deg, #5b86e5, #7a52e8, #b52b65, #f15a24);
+        position:relative;
+        background-image:linear-gradient(to right top,#0092ff,#007efe,#0068f9,#0050f2,#0033e7);
         background-size: 400% 400%;
-        animation: gradient 15s ease infinite;
+        animation: gradient 5s ease infinite;
         color:#fff;
-        .welcome-text{
-            display:block;
-            width:fit-content;
-            margin:0 auto;
-            &.welcome-bienvenue{
-                font-size:50px;
-                margin-bottom:10px;
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
             }
-            &.welcome-title{
-                font-size:100px;
+            50% {
+                background-position: 100% 50%;
             }
-        }
-        .row{
-            margin-top:200px;
-            .col{
-                i{
-                    font-size:120px;
-                    display:block;
-                    width:fit-content;
-                    margin:0 auto;
-                }
-                .welcome-subtext{
-                    margin-top:20px;
-                    text-align:center;
-                    display:block;
-                    font-size:25px;
-                }
+            100% {
+                background-position: 0% 50%;
             }
         }
-        #welcome-start{
-            color:#fff;
-            background-color:blue;
-            font-size:25px;
-            padding:15px 30px;
-            border-radius:99px;
-            border:unset;
-            cursor:pointer;
-            margin:100px auto 0 auto;
-            width:fit-content;
-            display:block;
+        .background{
+          position: absolute;
+          display: block;
+          top: 0px;
+          left: 0px;
+          z-index: 0;
+        }
+        .welcome-container{
+            position:absolute;
+            z-index:1;
+            width:80%;
+            height:fit-content;
+            padding:30px;
+            border-radius:20px;
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            top:50%;
+            left:50%;
+            transform:translate(-50%,-50%);
+            .welcome-text{
+                display:block;
+                width:fit-content;
+                margin:0 auto;
+                &.welcome-bienvenue{
+                    font-size:35px;
+                    margin-bottom:10px;
+                }
+                &.welcome-title{
+                    font-size:80px;
+                }
+            }
+            .row{
+                margin-top:50px;
+                .col{
+                    i{
+                        font-size:120px;
+                        display:block;
+                        width:fit-content;
+                        margin:0 auto;
+                    }
+                }
+            }
+            .welcome-subtext{
+                margin-top:20px;
+                text-align:center;
+                display:block;
+                font-size:25px;
+                &.sub{
+                    margin-top:30px;
+                }
+            }
+            #welcome-start{
+                color:#fff;
+                background-color:$blue;
+                font-size:25px;
+                padding:12px 27px;
+                border:3px solid $blue;
+                border-radius:99px;
+                cursor:pointer;
+                margin:50px auto 0 auto;
+                width:fit-content;
+                display:block;
+                transition:border-color .3s ease-in-out,background-color .3s ease-in-out;
+                &:hover{
+                    border-color:#fff;
+                    background-color:unset;
+                }
+            }
         }
     }
     &.intro-video{
@@ -203,15 +249,4 @@ body{
             padding:20px;
         }
     }
-}
-@keyframes gradient {
-	0% {
-		background-position: 0% 50%;
-	}
-	50% {
-		background-position: 100% 50%;
-	}
-	100% {
-		background-position: 0% 50%;
-	}
 }

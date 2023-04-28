@@ -55,11 +55,11 @@ async function getCurrentPosition() {
 
 async function createMap(mapId) {
     try {
-        if(mapId == 'map'){
+        if (mapId == 'map') {
             var map = L.map(mapId, {
                 zoomControl: false
             }).setView([latitude, longitude], 13);
-        }else{
+        } else {
             var map = L.map(mapId).setView([latitude, longitude], 13);
         }
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
@@ -74,10 +74,10 @@ async function createMap(mapId) {
             icon: newIcon
         }).addTo(map);
         marker.bindPopup("<b>Votre localisation " + (source === "ip" ? "IP" : "navigateur") + " : <br>" + address + "</b>").openPopup();
-        if(mapId == 'map1'){
+        if (mapId == 'map1') {
             map.zoomControl.setPosition('topleft');
             L.control.scale().addTo(map);
-        }else{
+        } else {
             map.dragging.disable();
             map.touchZoom.disable();
             map.doubleClickZoom.disable();
@@ -108,7 +108,7 @@ async function createWeatherWidget() {
 
 function launchApp(app) {
     apps.forEach(app => {
-        $(".app"+app).hide();
+        $(".app" + app).hide();
     });
     $(".home-content").css({
         transform: "scale(3)",
@@ -117,13 +117,28 @@ function launchApp(app) {
     $(".fixed-bar").css({
         opacity: "0",
     });
-    if(['.welcome', '#intro-video', '.home'].includes(app)){
+    if (['.welcome', '#intro-video', '.home'].includes(app)) {
         $(backHomeBtn).addClass('hidden'); // TODO ne fonctionne pas :(
-    }else{
+    } else {
         $(backHomeBtn).removeClass('hidden');
     }
+    Particles.init({
+        selector: '.background',
+        maxParticles: 0,
+    })
     $(app).show();
-    switch(app){
+    switch (app) {
+        case '.welcome':
+            Particles.init({
+                selector: '.background',
+                maxParticles: 250,
+                connectParticles: true,
+                speed: .15,
+                minDistance: 140,
+                sizeVariations: 4,
+                color: '#ffffff',
+            });
+            break;
         case '.intro-video':
             introVideo.play();
             introVideo.addEventListener("ended", function () {
@@ -179,15 +194,15 @@ $(document).ready(function () {
       } else {
         console.error("La reconnaissance vocale n'est pas supportée sur ce navigateur.");
       } */
-    
+
     launchApp('.welcome');
     getCurrentPosition();
 
     welcomeBtn.addEventListener("click", function () {
-        //launchApp('#intro-video');
-        //introVideo.play();
+        launchApp('#intro-video');
+        introVideo.play();
 
-        //introVideo.addEventListener("ended", function () {
+        introVideo.addEventListener("ended", function () {
             launchHome();
 
             // laisser la puisque je le fais qu'une fois au lancement
@@ -195,14 +210,13 @@ $(document).ready(function () {
             createWeatherWidget();
 
             $(".app-icon").on('click', function () {
-                launchApp("."+$(this).attr('class').replace('app-icon ',''));
+                launchApp("." + $(this).attr('class').replace('app-icon ', ''));
 
             });
             /*$(".app1").on('click', function () {
                 launchHome();
             });*/
-
-        //});
+        });
     });
 
 });

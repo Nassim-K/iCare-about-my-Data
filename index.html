@@ -8,27 +8,27 @@
 <body>
     <!--<span id="back-home-btn" class="hidden"><< Revenir à l'accueil</span>-->
     <div class="app welcome">
-        <span class="welcome-text welcome-bienvenue">Bienvenue</span>
-        <span class="welcome-text welcome-title">iCare about my Data</span>
-        <div class="row">
-            <div class="col">
-                <i class="bi bi-code-slash"></i>
-                <span class="welcome-subtext">Webdoc optimisé pour Google Chrome, version PC uniquement</span>
+        <canvas class="background"></canvas>
+        <div class="welcome-container">
+            <span class="welcome-text welcome-bienvenue">Bienvenue</span>
+            <span class="welcome-text welcome-title">iCare about my Data</span>
+            <div class="row">
+                <div class="col">
+                    <i class="bi bi-code-slash"></i>
+                    <span class="welcome-subtext">Webdoc optimisé pour Chrome, Edge, et Opera. Sur ordinateur uniquement.</span>
+                </div>
+                <div class="col">
+                    <i class="bi bi-geo-alt"></i>
+                    <span class="welcome-subtext">Autorisez l'accès à votre localisation<br>(message en haut à gauche).</span>
+                </div>
+                <div class="col">
+                    <i class="bi bi-mic"></i>
+                    <span class="welcome-subtext">Autorisez l'accès à votre micro<br>et vérifiez son fonctionnement.</span>
+                </div>
             </div>
-            <div class="col">
-                <i class="bi bi-geo-alt"></i>
-                <span class="welcome-subtext">Autorisez l'accès à votre localisation<br>(message en haut à gauche)</span>
-            </div>
-            <div class="col">
-                <i class="bi bi-headset"></i>
-                <span class="welcome-subtext">Vérifier la présence d'un micro sur votre machine<br></span>
-            </div>
-            <div class="col">
-                <i class="bi bi-mic"></i>
-                <span class="welcome-subtext">Autorisez l'accès à votre micro<br>(message en haut à gauche)</span>
-            </div>
+            <span class="welcome-subtext sub">Vérifiez le fonctionnement de votre casque et micro.<br>Vos données de localisation et de micro ne sont transmises à aucun tiers.</span>
+            <button id="welcome-start">Commencer &#8211; vidéo d'introduction</button>
         </div>
-        <button id="welcome-start">Commencer</button>
     </div>
     <video class="app intro-video" id="intro-video" src="./dist/video/intro.mp4"></video>
     <div class="app home">
@@ -139,6 +139,7 @@
             coucou
         </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particlesjs/2.2.3/particles.min.js"></script>
 	<script src="./dist/bundle.js"></script>
 </body>
 </html>
