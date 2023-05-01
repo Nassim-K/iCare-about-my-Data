@@ -6,6 +6,7 @@ import 'leaflet.markercluster';
 let latitude = null;
 let longitude = null;
 let address;
+let city;
 let source;
 
 const apps = ['.welcome', '#intro-video', '.home', '.maps'];
@@ -24,7 +25,7 @@ async function getCurrentPosition() {
             source = "browser";
             const addressResponse = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`);
             const addressData = await addressResponse.json();
-            const city = addressData.address.town || addressData.address.city || addressData.address.village || "Unknown";
+            city = addressData.address.town || addressData.address.city || addressData.address.village || "Unknown";
             address = `${addressData.address.road}, ${city}, ${addressData.address.state}, ${addressData.address.country}`;
             resolve({
                 address,
@@ -40,7 +41,7 @@ async function getCurrentPosition() {
                 longitude = data.longitude;
                 const addressResponse = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`);
                 const addressData = await addressResponse.json();
-                const city = addressData.address.town || addressData.address.city || addressData.address.village || "Unknown";
+                city = addressData.address.town || addressData.address.city || addressData.address.village || "Unknown";
                 address = `${addressData.address.road}, ${city}, ${addressData.address.state}, ${addressData.address.country}`;
                 resolve({
                     address,
@@ -96,15 +97,35 @@ async function createWeatherWidget() {
         const apiKey = "70cd7ed3d8d342bea42ea9eb0efda8c9";
         const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric` + `&appid=${apiKey}`);
         const data = await response.json();
+
         console.log(`Météo à ${address} :`);
         console.log(`Température : ${data.main.temp}°C`);
         console.log(`Humidité : ${data.main.humidity}%`);
         console.log(`Vitesse du vent : ${data.wind.speed}m/s`);
         console.log(`Description : ${data.weather[0].description}`);
+
+        $(".widget-weather .city").html(city);
+        $(".widget-weather .temperature").html(`${Math.round(data.main.temp)}°`);
     } catch (error) {
         console.error(error);
+        $(".widget-weather .city").text("N/A");
+        $(".widget-weather .temperature").text("?°");
     }
 }
+
+function updateTimeWidget() {
+    // Get current time and calculate degrees for clock hands
+    let date = new Date(),
+        secToDeg = (date.getSeconds() / 60) * 360,
+        minToDeg = (date.getMinutes() / 60) * 360,
+        hrToDeg = (date.getHours() / 12) * 360;
+    
+    // Rotate the clock hands to the appropriate degree based on the current time
+    $(".second").css("transform", `rotate(${secToDeg}deg)`);
+    $(".minute").css("transform", `rotate(${minToDeg}deg)`);
+    $(".hour").css("transform", `rotate(${hrToDeg}deg)`);
+  }
+  
 
 function launchApp(app) {
     apps.forEach(app => {
@@ -199,24 +220,30 @@ $(document).ready(function () {
     getCurrentPosition();
 
     welcomeBtn.addEventListener("click", function () {
-        launchApp('#intro-video');
-        introVideo.play();
+        //launchApp('#intro-video');
+        //introVideo.play();
 
-        introVideo.addEventListener("ended", function () {
+        //introVideo.addEventListener("ended", function () {
             launchHome();
 
             // laisser la puisque je le fais qu'une fois au lancement
             createMap('map');
             createWeatherWidget();
+            
+            // time widget
+            setInterval(updateTimeWidget, 1000);
+            updateTimeWidget();
 
-            $(".app-icon").on('click', function () {
+            $(".app-icon:not(.inactive,.link)").on('click', function () {
                 launchApp("." + $(this).attr('class').replace('app-icon ', ''));
 
             });
             /*$(".app1").on('click', function () {
                 launchHome();
             });*/
-        });
+        //});
+
+        // mail : https://codepen.io/ixahmedxi/full/MWKmxgN
     });
 
 });
