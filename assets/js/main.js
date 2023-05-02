@@ -9,10 +9,10 @@ let address;
 let city;
 let source;
 
-const apps = ['.welcome', '#intro-video', '.home', '.maps'];
+const apps = ['.welcome', '#intro-video', '.home', '.maps', '.tiktok'];
 const introVideo = document.getElementById("intro-video");
 const welcomeBtn = document.getElementById("welcome-start");
-const backHomeBtn = $(".back-home-btn");
+const backHomeBtn = $("#back-home-btn");
 
 async function getCurrentPosition() {
     return new Promise(async (resolve, reject) => {
@@ -138,10 +138,18 @@ function launchApp(app) {
     $(".fixed-bar").css({
         opacity: "0",
     });
-    if (['.welcome', '#intro-video', '.home'].includes(app)) {
-        $(backHomeBtn).addClass('hidden'); // TODO ne fonctionne pas :(
+    if (['.welcome', '#intro-video', '.intro-video', '.home'].includes(app)) {
+        $(backHomeBtn).css({
+            bottom: "-100%",
+            opacity: "0",
+            display: "none"
+        });
     } else {
-        $(backHomeBtn).removeClass('hidden');
+        $(backHomeBtn).show();
+        $(backHomeBtn).css({
+            bottom: "20px",
+            opacity: "1",
+        });
     }
     Particles.init({
         selector: '.background',
@@ -216,14 +224,19 @@ $(document).ready(function () {
         console.error("La reconnaissance vocale n'est pas supportée sur ce navigateur.");
       } */
 
+    // bloquer clic droit
+    $(document).bind("contextmenu", function (e) {
+        e.preventDefault();
+    });
+    
     launchApp('.welcome');
     getCurrentPosition();
 
     welcomeBtn.addEventListener("click", function () {
-        //launchApp('#intro-video');
-        //introVideo.play();
+        launchApp('#intro-video');
+        introVideo.play();
 
-        //introVideo.addEventListener("ended", function () {
+        introVideo.addEventListener("ended", function () {
             launchHome();
 
             // laisser la puisque je le fais qu'une fois au lancement
@@ -236,12 +249,12 @@ $(document).ready(function () {
 
             $(".app-icon:not(.inactive,.link)").on('click', function () {
                 launchApp("." + $(this).attr('class').replace('app-icon ', ''));
-
             });
-            /*$(".app1").on('click', function () {
+        
+            $(backHomeBtn).on('click', function () {
                 launchHome();
-            });*/
-        //});
+            });
+        });
 
         // mail : https://codepen.io/ixahmedxi/full/MWKmxgN
     });
