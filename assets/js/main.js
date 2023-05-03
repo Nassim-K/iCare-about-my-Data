@@ -72,7 +72,7 @@ async function createMap(mapId) {
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
         map.attributionControl.setPrefix('');
         var newIcon = L.icon({
-            iconUrl: '/dist/img/marker-icon.png',
+            iconUrl: './dist/img/marker-icon.png',
             iconSize: [50, 50],
             iconAnchor: [25, 50],
             popupAnchor: [1, -50],
