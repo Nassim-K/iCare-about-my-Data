@@ -3,7 +3,7 @@ module.exports = {
   mode: 'production',
   watch: true,
   output: {
-    path: `${__dirname}/dist`,
+    path: `${__dirname}/docs/dist`,
     filename: 'bundle.js',
   },
   module: {

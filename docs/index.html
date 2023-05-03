@@ -1,1 +1,275 @@
-coucou
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>iCare about my Data</title>
+    <link rel="stylesheet" href="./dist/css/app.min.css">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RW2WDMB34D"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-RW2WDMB34D');
+        (function(h,o,t,j,a,r){
+            h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+            h._hjSettings={hjid:3476890,hjsv:6};
+            a=o.getElementsByTagName('head')[0];
+            r=o.createElement('script');r.async=1;
+            r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+            a.appendChild(r);
+        })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+    </script>
+</head>
+<body>
+    <span id="back-home-btn" class="hidden"><i class="bi bi-x-lg"></i>Quitter l'application</span>
+    <div class="app welcome">
+        <canvas class="background"></canvas>
+        <div class="welcome-container">
+            <span class="welcome-text welcome-bienvenue">Bienvenue</span>
+            <span class="welcome-text welcome-title">iCare about my Data</span>
+            <div class="row">
+                <div class="col">
+                    <i class="bi bi-code-slash"></i>
+                    <span class="welcome-subtext">Webdoc optimisé pour Chrome, Edge, et Opera. Sur ordinateur uniquement.</span>
+                </div>
+                <div class="col">
+                    <i class="bi bi-geo-alt"></i>
+                    <span class="welcome-subtext">Autorisez l'accès à votre localisation<br>(message en haut à gauche).</span>
+                </div>
+                <div class="col">
+                    <i class="bi bi-mic"></i>
+                    <span class="welcome-subtext">Autorisez l'accès à votre micro<br>et vérifiez son fonctionnement.</span>
+                </div>
+            </div>
+            <span class="welcome-subtext sub">Vérifiez le fonctionnement de votre casque et micro.<br>Vos données de localisation et de micro ne sont transmises à aucun tiers.</span>
+            <button id="welcome-start">Commencer</button>
+        </div>
+    </div>
+    <div class="app intro-video player-container" id="intro-video">
+        <div id="player"></div>
+    </div>
+    <div class="app home">
+        <div class="fixed-bar row">
+            <div class="col d-flex flex-column justify-content-center align-items-center">
+                <div class="app-icon intro-video"></div>
+            </div>
+            <div class="col d-flex flex-column justify-content-center align-items-center">
+                <div class="app-icon tiktok"></div>
+            </div>
+            <div class="col d-flex flex-column justify-content-center align-items-center">
+                <div class="app-icon siri"></div>
+            </div>
+            <div class="col d-flex flex-column justify-content-center align-items-center">
+                <div class="app-icon maps"></div>
+            </div>
+            <div class="col d-flex flex-column justify-content-center align-items-center">
+                <div class="app-icon mail"></div>
+            </div>
+            <div class="col d-flex flex-column justify-content-center align-items-center">
+                <div class="app-icon nordvpn"></div>
+            </div>
+            <div class="col d-flex flex-column justify-content-center align-items-center">
+                <a href="//www.cnil.fr/fr/cnil-direct/question/la-cnil-cest-quoi" target="_blank">
+                    <div class="app-icon cnil link"></div>
+                </a>
+            </div>
+        </div>
+        <div class="home-content">
+            <div class="wrapper">
+                <div class="row mb-4">
+                    <div class="col-4">
+                        <div class="row mb-4">
+                            <div class="col-6">
+                                <div class="widget widget-clock">
+                                    <div class="clock">
+                                        <label style="--i:1">
+                                            <span>1</span>
+                                        </label>
+                                        <label style="--i:2">
+                                            <span>2</span>
+                                        </label>
+                                        <label style="--i:3">
+                                            <span>3</span>
+                                        </label>
+                                        <label style="--i:4">
+                                            <span>4</span>
+                                        </label>
+                                        <label style="--i:5">
+                                            <span>5</span>
+                                        </label>
+                                        <label style="--i:6">
+                                            <span>6</span>
+                                        </label>
+                                        <label style="--i:7">
+                                            <span>7</span>
+                                        </label>
+                                        <label style="--i:8">
+                                            <span>8</span>
+                                        </label>
+                                        <label style="--i:9">
+                                            <span>9</span>
+                                        </label>
+                                        <label style="--i:10">
+                                            <span>10</span>
+                                        </label>
+                                        <label style="--i:11">
+                                            <span>11</span>
+                                        </label>
+                                        <label style="--i:12">
+                                            <span>12</span>
+                                        </label>
+                                        <div class="indicator">
+                                            <span class="hand hour"></span>
+                                            <span class="hand minute"></span>
+                                            <span class="hand second"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="widget widget-weather">
+                                    <span class="city"></span>
+                                    <span class="temperature"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="widget"></div>
+                    </div>
+                    <div class="col-4">
+                        <div class="widget widget-2 widget-tasks">
+                            <div class="header">
+                                <span class="title">Tâches</span>
+                                <i class="bi bi-plus"></i>
+                            </div>
+                            <div class="body">
+                                <div>
+                                    <input type="checkbox" id="intro" checked>
+                                    <label for="intro">Regarder l'introduction</label>
+                                </div>
+                                <div>
+                                    <input type="checkbox" id="tiktok">
+                                    <label for="tiktok">Regarder des Tiktoks</label>
+                                </div>
+                                <div>
+                                    <input type="checkbox" id="siri">
+                                    <label for="siri">Demander quelque chose à Siri</label>
+                                </div>
+                                <div>
+                                    <input type="checkbox" id="maps">
+                                    <label for="maps">M'orienter avec Cartes</label>
+                                </div>
+                                <div>
+                                    <input type="checkbox" id="mail">
+                                    <label for="mail">Consulter mes mail</label>
+                                </div>
+                                <div>
+                                    <input type="checkbox" id="safari">
+                                    <label for="safari">Lancer NordVPN</label>
+                                </div>
+                                <div>
+                                    <input type="checkbox" id="cnil">
+                                    <label for="cnil">Consulter l'app CNIL</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="widget widget-2 widget-map">
+                            <div id="map" style="height: 100%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <div class="col-2 d-flex flex-column justify-content-center align-items-center">
+                        <div class="app-icon intro-video"></div>
+                        <span class="app-title intro-video">Introduction</span>
+                    </div>
+                    <div class="col-2 d-flex flex-column justify-content-center align-items-center">
+                        <div class="app-icon tiktok"></div>
+                        <span class="app-title tiktok">Tiktok</span>
+                    </div>
+                    <div class="col-2 d-flex flex-column justify-content-center align-items-center">
+                        <div class="app-icon siri"></div>
+                        <span class="app-title">Siri</span>
+                    </div>
+                    <div class="col-2 d-flex flex-column justify-content-center align-items-center">
+                        <div class="app-icon maps"></div>
+                        <span class="app-title">Cartes</span>
+                    </div>
+                    <div class="col-2 d-flex flex-column justify-content-center align-items-center">
+                        <div class="app-icon google"></div>
+                        <span class="app-title">Google</span>
+                    </div>
+                    <div class="col-2 d-flex flex-column justify-content-center align-items-center">
+                        <div class="app-icon nordvpn"></div>
+                        <span class="app-title">NordVPN</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-2 d-flex flex-column justify-content-center align-items-center">
+                        <div class="app-icon mail inactive"></div>
+                        <span class="app-title">Mail</span>
+                    </div>
+                    <div class="col-2 d-flex flex-column justify-content-center align-items-center">
+                        <div class="app-icon app-store inactive"></div>
+                        <span class="app-title">App Store</span>
+                    </div>
+                    <div class="col-2 d-flex flex-column justify-content-center align-items-center">
+                        <div class="app-icon whatsapp inactive"></div>
+                        <span class="app-title">WhatsApp</span>
+                    </div>
+                    <div class="col-2 d-flex flex-column justify-content-center align-items-center">
+                        <div class="app-icon messages inactive"></div>
+                        <span class="app-title">Messages</span>
+                    </div>
+                    <div class="col-2 d-flex flex-column justify-content-center align-items-center">
+                        <div class="app-icon meteo inactive"></div>
+                        <span class="app-title">Météo</span>
+                    </div>
+                    <div class="col-2 d-flex flex-column justify-content-center align-items-center">
+                        <a href="//www.cnil.fr/fr/cnil-direct/question/la-cnil-cest-quoi" target="_blank">
+                            <div class="app-icon cnil link"></div>
+                        </a>
+                        <span class="app-title">CNIL</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="app maps">
+        <div id="map1" style="height: 100%;"></div>
+        <div class="sidepanel">
+            coucou
+        </div>
+    </div>
+    <div class="app tiktok">
+        <div class="content">
+            <div style="width: 100%;"><div style="position: relative; padding-bottom: 56.25%; padding-top: 0; height: 0;"><iframe title="CHALK & BLACKBOARD PRESENTATION" frameborder="0" width="1200px" height="675px" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://view.genial.ly/6451253bc96926001135c167" type="text/html" allowscriptaccess="always" allowfullscreen="true" scrolling="yes" allownetworking="all"></iframe> </div> </div>
+        </div>
+        <div class="sidepanel">
+            <div class="flex">
+                <img src="./dist/img/tiktok/user-meta.jpg" draggable="false">
+                <img src="./dist/img/tiktok/follow.jpg" draggable="false">
+            </div>
+            <div class="description">
+                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quis nisi quam quidem ducimus exercitationem minima praesentium quisquam nihil laudantium, dolorem consequatur ex voluptatem! Dolor quis veritatis sit minus porro. Sint.</p>
+            </div>
+            <div class="flex">
+                <img src="./dist/img/tiktok/stats.jpg" draggable="false">
+                <img src="./dist/img/tiktok/share.jpg" draggable="false">
+            </div>
+        </div>
+    </div>
+    <div class="app siri">
+
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particlesjs/2.2.3/particles.min.js"></script>
+    <script>
+      var tag = document.createElement('script');
+      tag.src = "//www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    </script>
+	<script src="./dist/bundle.js"></script>
+</body>
+</html>
