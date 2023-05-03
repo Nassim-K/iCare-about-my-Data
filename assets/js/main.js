@@ -3,55 +3,61 @@ import 'leaflet/dist/leaflet.css';
 import 'leaflet-defaulticon-compatibility';
 import 'leaflet.markercluster';
 
-let latitude = null;
-let longitude = null;
-let address;
-let city;
-let source;
+let location;
 
-const apps = ['.welcome', '#intro-video', '.home', '.maps', '.tiktok'];
-const introVideo = document.getElementById("intro-video");
+var player;
+
+const apps = ['.welcome', '#intro-video', '.home', '.maps', '.tiktok', '.siri'];
 const welcomeBtn = document.getElementById("welcome-start");
 const backHomeBtn = $("#back-home-btn");
 
-async function getCurrentPosition() {
+async function getLocation() {
     return new Promise(async (resolve, reject) => {
         try {
             const position = await new Promise((resolve, reject) => {
                 navigator.geolocation.getCurrentPosition(resolve, reject);
             });
-            latitude = position.coords.latitude;
-            longitude = position.coords.longitude;
-            source = "browser";
-            const addressResponse = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`);
-            const addressData = await addressResponse.json();
-            city = addressData.address.town || addressData.address.city || addressData.address.village || "Unknown";
-            address = `${addressData.address.road}, ${city}, ${addressData.address.state}, ${addressData.address.country}`;
-            resolve({
-                address,
-                source
-            });
+            const { latitude, longitude } = position.coords;
+            const browserAddress = await getAddress(latitude, longitude);
+            const ipAddress = await getIpAddress();
+            location = {
+                browserLocation: {
+                    latitude,
+                    longitude,
+                    address: browserAddress.address,
+                    city: browserAddress.city
+                },
+                ipLocation: {
+                    latitude: ipAddress.latitude,
+                    longitude: ipAddress.longitude,
+                    address: ipAddress.address,
+                    city: ipAddress.city
+                }
+            };
+            resolve(location);
         } catch (error) {
-            alert("Pour le bon déroulement du Webdoc, veuillez activer la localisation dans votre navigateur.");
-            try {
-                const response = await fetch("https://ipapi.co/json/");
-                const data = await response.json();
-                source = "ip";
-                latitude = data.latitude;
-                longitude = data.longitude;
-                const addressResponse = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`);
-                const addressData = await addressResponse.json();
-                city = addressData.address.town || addressData.address.city || addressData.address.village || "Unknown";
-                address = `${addressData.address.road}, ${city}, ${addressData.address.state}, ${addressData.address.country}`;
-                resolve({
-                    address,
-                    source
-                });
-            } catch (error) {
-                reject("Une erreur est survenue lors de la récupération de la position.");
-            }
+            alert('Pour le bon déroulement du Webdoc, veuillez activer la localisation de votre navigateur.');
+            reject("Une erreur est survenue lors de la récupération de la position.");
         }
     });
+}
+
+async function getAddress(latitude, longitude) {
+    const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`);
+    const addressData = await response.json();
+    const city = addressData.address.town || addressData.address.city || addressData.address.village || "Unknown";
+    const address = `${addressData.address.road}, ${city}, ${addressData.address.state}, ${addressData.address.country}`;
+    return { address, city };
+}
+
+async function getIpAddress() {
+    const response = await fetch("https://ipapi.co/json/");
+    const data = await response.json();
+    const latitude = data.latitude;
+    const longitude = data.longitude;
+    const city = data.city;
+    const address = `${data.city}, ${data.region}, ${data.country}`;
+    return { latitude, longitude, city, address };
 }
 
 async function createMap(mapId) {
@@ -59,9 +65,9 @@ async function createMap(mapId) {
         if (mapId == 'map') {
             var map = L.map(mapId, {
                 zoomControl: false
-            }).setView([latitude, longitude], 13);
+            }).setView([location.browserLocation.latitude, location.browserLocation.longitude], 13);
         } else {
-            var map = L.map(mapId).setView([latitude, longitude], 13);
+            var map = L.map(mapId).setView([location.browserLocation.latitude, location.browserLocation.longitude], 13);
         }
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
         map.attributionControl.setPrefix('');
@@ -71,10 +77,10 @@ async function createMap(mapId) {
             iconAnchor: [25, 50],
             popupAnchor: [1, -50],
         });
-        var marker = L.marker([latitude, longitude], {
+        var marker = L.marker([location.browserLocation.latitude, location.browserLocation.longitude], {
             icon: newIcon
         }).addTo(map);
-        marker.bindPopup("<b>Votre localisation " + (source === "ip" ? "IP" : "navigateur") + " : <br>" + address + "</b>").openPopup();
+        marker.bindPopup("<b>Votre localisation " + (location.browserLocation.source === "ip" ? "IP" : "navigateur") + " : <br>" + location.browserLocation.address + "</b>", { autoClose: false, closeButton: false, closeOnClick: false }).openPopup();
         if (mapId == 'map1') {
             map.zoomControl.setPosition('topleft');
             L.control.scale().addTo(map);
@@ -91,20 +97,13 @@ async function createMap(mapId) {
     }
 }
 
-// todo
 async function createWeatherWidget() {
     try {
         const apiKey = "70cd7ed3d8d342bea42ea9eb0efda8c9";
-        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric` + `&appid=${apiKey}`);
+        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${location.browserLocation.latitude}&lon=${location.browserLocation.longitude}&units=metric` + `&appid=${apiKey}`);
         const data = await response.json();
 
-        console.log(`Météo à ${address} :`);
-        console.log(`Température : ${data.main.temp}°C`);
-        console.log(`Humidité : ${data.main.humidity}%`);
-        console.log(`Vitesse du vent : ${data.wind.speed}m/s`);
-        console.log(`Description : ${data.weather[0].description}`);
-
-        $(".widget-weather .city").html(city);
+        $(".widget-weather .city").html(location.browserLocation.city);
         $(".widget-weather .temperature").html(`${Math.round(data.main.temp)}°`);
     } catch (error) {
         console.error(error);
@@ -114,20 +113,17 @@ async function createWeatherWidget() {
 }
 
 function updateTimeWidget() {
-    // Get current time and calculate degrees for clock hands
     let date = new Date(),
         secToDeg = (date.getSeconds() / 60) * 360,
         minToDeg = (date.getMinutes() / 60) * 360,
         hrToDeg = (date.getHours() / 12) * 360;
-    
-    // Rotate the clock hands to the appropriate degree based on the current time
+
     $(".second").css("transform", `rotate(${secToDeg}deg)`);
     $(".minute").css("transform", `rotate(${minToDeg}deg)`);
     $(".hour").css("transform", `rotate(${hrToDeg}deg)`);
-  }
+}
   
-
-function launchApp(app) {
+async function launchApp(app) {
     apps.forEach(app => {
         $(".app" + app).hide();
     });
@@ -169,14 +165,44 @@ function launchApp(app) {
             });
             break;
         case '.intro-video':
-            introVideo.play();
-            introVideo.addEventListener("ended", function () {
-                launchHome();
-            });
+            player.seekTo(0);
+            player.playVideo();
             break;
         case '.maps':
             createMap('map1');
             break;
+        case '.siri':
+            if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
+                const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+
+                recognition.lang = 'fr-FR';
+
+                recognition.onstart = function () {
+                    console.log("La reconnaissance vocale a démarré.");
+                }
+
+                recognition.onresult = function (event) {
+                    const result = event.results[0][0].transcript;
+                    console.log("Vous avez dit : " + result);
+                }
+
+                recognition.onerror = function (event) {
+                    console.error("Erreur de reconnaissance vocale : " + event.error);
+                }
+
+                recognition.onend = function () {
+                    console.log("La reconnaissance vocale s'est terminée.");
+                }
+
+                //const startButton = document.getElementById("start-button");
+
+                //welcomeBtn.addEventListener("click", function() {
+                recognition.start();
+                //});
+
+            } else {
+                alert("La reconnaissance vocale n'est pas supportée sur ce navigateur.");
+            }
     }
 }
 
@@ -191,72 +217,76 @@ function launchHome() {
     });
 }
 
-$(document).ready(function () {
-
-    /*if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
-        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-        recognition.lang = 'fr-FR';
-        
-        recognition.onstart = function() {
-          console.log("La reconnaissance vocale a démarré.");
-        }
-        
-        recognition.onresult = function(event) {
-          const result = event.results[0][0].transcript;
-          console.log("Vous avez dit : " + result);
-        }
-        
-        recognition.onerror = function(event) {
-          console.error("Erreur de reconnaissance vocale : " + event.error);
-        }
-        
-        recognition.onend = function() {
-          console.log("La reconnaissance vocale s'est terminée.");
-        }
-        
-        //const startButton = document.getElementById("start-button");
-        
-        //welcomeBtn.addEventListener("click", function() {
-          recognition.start();
-        //});
-        
-      } else {
-        console.error("La reconnaissance vocale n'est pas supportée sur ce navigateur.");
-      } */
+$(document).ready(async function () {
 
     // bloquer clic droit
     $(document).bind("contextmenu", function (e) {
         e.preventDefault();
     });
+
+    // Intro youtube
+    window.onYouTubeIframeAPIReady = function () {
+        player = new YT.Player('player', {
+            height: '100%',
+            width: '100%',
+            videoId: "FUKmyRLOlAA",
+            playerVars: {
+                'controls': 0
+            },
+            events: {
+                'onReady': onPlayerReady,
+                'onStateChange': onPlayerStateChange
+            }
+        });
+    }
+
+    var ready = false;
+    function onPlayerReady() {
+        ready = true;
+    }
+
+    var initialized = false;
+    function onPlayerStateChange(event) {
+        if (event.data == YT.PlayerState.ENDED) {
+            launchHome();
+            if (!initialized) {
+                console.log('ok');
+                createMap('map');
+                createWeatherWidget();
+                setInterval(updateTimeWidget, 1000);
+                updateTimeWidget();
+                initialized = true;
+            }
+        }
+    }
     
     launchApp('.welcome');
-    getCurrentPosition();
+    getLocation();
 
-    welcomeBtn.addEventListener("click", function () {
-        launchApp('#intro-video');
-        introVideo.play();
+    // on demande le micro
+    navigator.mediaDevices.getUserMedia({ audio: true })
+        .catch(function(err) {
+            console.error('Erreur : Impossible d\'activer le microphone', err);
+            alert('Pour le bon déroulement du Webdoc, veuillez activer l\'utilisation du microphone sur votre navigateur.')
+        });
 
-        introVideo.addEventListener("ended", function () {
-            launchHome();
-
-            // laisser la puisque je le fais qu'une fois au lancement
-            createMap('map');
-            createWeatherWidget();
-            
-            // time widget
-            setInterval(updateTimeWidget, 1000);
-            updateTimeWidget();
+    welcomeBtn.addEventListener("click", async function () {
+        if (ready) {
+            // Lancement prmeière fois de intro qui se charge d'initialiser home et widgets
+            launchApp('.intro-video');
 
             $(".app-icon:not(.inactive,.link)").on('click', function () {
                 launchApp("." + $(this).attr('class').replace('app-icon ', ''));
             });
-        
+    
+            $(".widget.widget-map").on('click', function () {
+                launchApp(".maps");
+            });
+    
             $(backHomeBtn).on('click', function () {
                 launchHome();
             });
-        });
-
-        // mail : https://codepen.io/ixahmedxi/full/MWKmxgN
+        }
     });
 
 });

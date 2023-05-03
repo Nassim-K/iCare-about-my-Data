@@ -30,7 +30,9 @@
             <button id="welcome-start">Commencer</button>
         </div>
     </div>
-    <video class="app intro-video" id="intro-video" src="./dist/video/intro.mp4"></video>
+    <div class="app intro-video player-container" id="intro-video">
+        <div id="player"></div>
+    </div>
     <div class="app home">
         <div class="fixed-bar row">
             <div class="col d-flex flex-column justify-content-center align-items-center">
@@ -180,8 +182,8 @@
                         <span class="app-title">Cartes</span>
                     </div>
                     <div class="col-2 d-flex flex-column justify-content-center align-items-center">
-                        <div class="app-icon mail"></div>
-                        <span class="app-title">Mail</span>
+                        <div class="app-icon google"></div>
+                        <span class="app-title">Google</span>
                     </div>
                     <div class="col-2 d-flex flex-column justify-content-center align-items-center">
                         <div class="app-icon nordvpn"></div>
@@ -190,8 +192,8 @@
                 </div>
                 <div class="row">
                     <div class="col-2 d-flex flex-column justify-content-center align-items-center">
-                        <div class="app-icon safari inactive"></div>
-                        <span class="app-title">Safari</span>
+                        <div class="app-icon mail inactive"></div>
+                        <span class="app-title">Mail</span>
                     </div>
                     <div class="col-2 d-flex flex-column justify-content-center align-items-center">
                         <div class="app-icon app-store inactive"></div>
@@ -207,7 +209,7 @@
                     </div>
                     <div class="col-2 d-flex flex-column justify-content-center align-items-center">
                         <div class="app-icon meteo inactive"></div>
-                        <span class="app-title">Meteo</span>
+                        <span class="app-title">Météo</span>
                     </div>
                     <div class="col-2 d-flex flex-column justify-content-center align-items-center">
                         <a href="//www.cnil.fr/fr/cnil-direct/question/la-cnil-cest-quoi" target="_blank">
@@ -243,7 +245,56 @@
             </div>
         </div>
     </div>
+    <div class="app siri">
+
+    </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/particlesjs/2.2.3/particles.min.js"></script>
+    <!--<script>
+        var tag = document.createElement('script');
+
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+        var player;
+
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: '100%',
+                width: '100%',
+                videoId: 'M7lc1UVf-VE',
+                playerVars: {
+                    'playsinline': 1
+                },
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+            event.target.playVideo();
+        }
+
+        var done = false;
+
+        function onPlayerStateChange(event) {
+            if (event.data == YT.PlayerState.PLAYING && !done) {
+                setTimeout(stopVideo, 6000);
+                done = true;
+            }
+        }
+
+        function stopVideo() {
+            player.stopVideo();
+        }
+    </script>-->
+    <script>
+      var tag = document.createElement('script');
+      tag.src = "//www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    </script>
 	<script src="./dist/bundle.js"></script>
 </body>
 </html>
