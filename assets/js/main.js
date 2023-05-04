@@ -234,9 +234,7 @@ window.onYouTubeIframeAPIReady = function () {
 }
 
 function onPlayerReady() {
-    setTimeout(function () {
-        $(document).trigger('readyEvent');
-    }, 0);
+    $(document).trigger('readyEvent');
 }
 
 var initialized = false;
@@ -262,8 +260,19 @@ $(document).ready(function () {
 
     // launch loader + app
     launchApp('.welcome');
+
+    // prevent youtube bug
+    var isReadyEventTriggered = false;
+    var reloadTimeout = setTimeout(function() {
+        if (!isReadyEventTriggered) {
+            history.go(0);
+        }
+    }, 5000);
     
     $(document).one('readyEvent', function () {
+        isReadyEventTriggered = true;
+        clearTimeout(reloadTimeout);
+        
         $('.preloader .loader').fadeOut();
         $('.preloader').animate({
             bottom: '100%',
@@ -279,7 +288,7 @@ $(document).ready(function () {
                 alert('Pour le bon déroulement du Webdoc, veuillez activer l\'utilisation du microphone sur votre navigateur.')
             });
 
-        welcomeBtn.addEventListener("click", async function () {
+        welcomeBtn.addEventListener("click", function () {
             // Lancement prmeière fois de intro qui se charge d'initialiser home et widgets
             launchApp('.intro-video');
 
