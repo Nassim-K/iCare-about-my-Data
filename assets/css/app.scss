@@ -61,6 +61,35 @@ body{
         background-size: 400% 400%;
         animation: gradient 5s ease infinite;
         color:#fff;
+        .preloader {
+            position:fixed;
+            z-index:2;
+            background-color:#000;
+            top:0;
+            left:0;
+            bottom:0;
+            right:0;
+            .loader {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                border: 5px solid #f3f3f3;
+                border-top: 5px solid #000;
+                border-radius: 50%;
+                width: 60px;
+                height: 60px;
+                animation: spin 1.5s linear infinite;
+            }
+            @keyframes spin {
+                0% {
+                    transform: rotate(0deg);
+                }
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+        }
         @keyframes gradient {
             0% {
                 background-position: 0% 50%;

@@ -217,76 +217,84 @@ function launchHome() {
     });
 }
 
-$(document).ready(async function () {
+// Intro youtube
+window.onYouTubeIframeAPIReady = function () {
+    player = new YT.Player('player', {
+        height: '100%',
+        width: '100%',
+        videoId: "FUKmyRLOlAA",
+        playerVars: {
+            'controls': 0
+        },
+        events: {
+            'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange
+        }
+    });
+}
+
+function onPlayerReady() {
+    setTimeout(function () {
+        $(document).trigger('readyEvent');
+    }, 0);
+}
+
+var initialized = false;
+function onPlayerStateChange(event) {
+    if (event.data == YT.PlayerState.ENDED) {
+        launchHome();
+        if (!initialized) {
+            createMap('map');
+            createWeatherWidget();
+            setInterval(updateTimeWidget, 1000);
+            updateTimeWidget();
+            initialized = true;
+        }
+    }
+}
+
+$(document).ready(function () {
 
     // bloquer clic droit
     $(document).bind("contextmenu", function (e) {
         e.preventDefault();
     });
 
-    // Intro youtube
-    window.onYouTubeIframeAPIReady = function () {
-        player = new YT.Player('player', {
-            height: '100%',
-            width: '100%',
-            videoId: "FUKmyRLOlAA",
-            playerVars: {
-                'controls': 0
-            },
-            events: {
-                'onReady': onPlayerReady,
-                'onStateChange': onPlayerStateChange
-            }
-        });
-    }
-
-    var ready = false;
-    function onPlayerReady() {
-        ready = true;
-    }
-
-    var initialized = false;
-    function onPlayerStateChange(event) {
-        if (event.data == YT.PlayerState.ENDED) {
-            launchHome();
-            if (!initialized) {
-                console.log('ok');
-                createMap('map');
-                createWeatherWidget();
-                setInterval(updateTimeWidget, 1000);
-                updateTimeWidget();
-                initialized = true;
-            }
-        }
-    }
-    
+    // launch loader + app
     launchApp('.welcome');
-    getLocation();
+    
+    $(document).one('readyEvent', function () {
+        $('.preloader .loader').fadeOut();
+        $('.preloader').animate({
+            bottom: '100%',
+            opacity: '0'
+        }, 1000);
 
-    // on demande le micro
-    navigator.mediaDevices.getUserMedia({ audio: true })
-        .catch(function(err) {
-            console.error('Erreur : Impossible d\'activer le microphone', err);
-            alert('Pour le bon déroulement du Webdoc, veuillez activer l\'utilisation du microphone sur votre navigateur.')
-        });
+        getLocation();
 
-    welcomeBtn.addEventListener("click", async function () {
-        if (ready) {
+        // on demande le micro
+        navigator.mediaDevices.getUserMedia({ audio: true })
+            .catch(function (err) {
+                console.error('Erreur : Impossible d\'activer le microphone', err);
+                alert('Pour le bon déroulement du Webdoc, veuillez activer l\'utilisation du microphone sur votre navigateur.')
+            });
+
+        welcomeBtn.addEventListener("click", async function () {
             // Lancement prmeière fois de intro qui se charge d'initialiser home et widgets
             launchApp('.intro-video');
 
             $(".app-icon:not(.inactive,.link)").on('click', function () {
                 launchApp("." + $(this).attr('class').replace('app-icon ', ''));
             });
-    
+
             $(".widget.widget-map").on('click', function () {
                 launchApp(".maps");
             });
-    
+
             $(backHomeBtn).on('click', function () {
                 launchHome();
             });
-        }
+        });
     });
 
 });
