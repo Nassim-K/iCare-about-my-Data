@@ -7,7 +7,7 @@ let location;
 
 var player;
 
-const apps = ['.welcome', '#intro-video', '.home', '.maps', '.tiktok', '.siri'];
+const apps = ['.welcome', '#intro-video', '.home', '.maps', '.tiktok', '.siri', '.google'];
 const welcomeBtn = document.getElementById("welcome-start");
 const backHomeBtn = $("#back-home-btn");
 
@@ -153,6 +153,15 @@ async function launchApp(app) {
     })
     $(app).show();
     switch (app) {
+        case '.home':
+            $(".home-content").css({
+                transform: "scale(1)",
+                opacity: "1",
+            });
+            $(".fixed-bar").css({
+                opacity: "1",
+            });
+            break;
         case '.welcome':
             Particles.init({
                 selector: '.background',
@@ -206,17 +215,6 @@ async function launchApp(app) {
     }
 }
 
-function launchHome() {
-    launchApp('.home');
-    $(".home-content").css({
-        transform: "scale(1)",
-        opacity: "1",
-    });
-    $(".fixed-bar").css({
-        opacity: "1",
-    });
-}
-
 // Intro youtube
 window.onYouTubeIframeAPIReady = function () {
     player = new YT.Player('player', {
@@ -224,7 +222,7 @@ window.onYouTubeIframeAPIReady = function () {
         width: '100%',
         videoId: "FUKmyRLOlAA",
         playerVars: {
-            'controls': 0
+            //'controls': 0
         },
         events: {
             'onReady': onPlayerReady,
@@ -240,7 +238,7 @@ function onPlayerReady() {
 var initialized = false;
 function onPlayerStateChange(event) {
     if (event.data == YT.PlayerState.ENDED) {
-        launchHome();
+        launchApp('.home');
         if (!initialized) {
             createMap('map');
             createWeatherWidget();
@@ -301,7 +299,7 @@ $(document).ready(function () {
             });
 
             $(backHomeBtn).on('click', function () {
-                launchHome();
+                launchApp('.home');
             });
         });
     });

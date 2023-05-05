@@ -466,3 +466,14 @@ noscript span, .mobile span {
 .app.siri {
   background-color: red;
 }
+.app.google div {
+  position: relative;
+  height: 100vh;
+}
+.app.google div iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
