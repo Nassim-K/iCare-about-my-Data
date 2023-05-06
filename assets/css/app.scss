@@ -220,6 +220,12 @@ noscript,.mobile{
             border-radius:30px;
             opacity:0;
             transition:all 1s ease-in-out;
+            @media screen and (max-height:850px){
+                transform:translateX(-50%) scale(0.9);
+            }
+            @media screen and (max-height:750px){
+                transform:translateX(-50%) scale(0.8);
+            }
         }
         .home-content{
             position:fixed;
@@ -233,8 +239,13 @@ noscript,.mobile{
             transition:all .5s ease-in-out;
             .wrapper{
                 width:1170px;
-                @media screen and (max-width:1250px){
-                    width:90%;
+                height:fit-content;
+                max-height:100%;
+                @media screen and (max-height:850px){
+                    transform:scale(0.9);
+                }
+                @media screen and (max-height:850px){
+                    transform:scale(0.8);
                 }
             }
         }
@@ -301,9 +312,6 @@ noscript,.mobile{
             &.widget-2{
                 height:100%;
                 max-height:calc(1170px * 1/3 - 20px);
-                /*@media screen and (max-width:1250px){
-                    max-height:100%;
-                }*/
             }
             &.widget-map{
                 cursor:pointer !important;

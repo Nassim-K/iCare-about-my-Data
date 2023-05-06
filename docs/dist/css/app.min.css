@@ -219,6 +219,16 @@ noscript span, .mobile span {
   opacity: 0;
   transition: all 1s ease-in-out;
 }
+@media screen and (max-height: 850px) {
+  .app.home .fixed-bar {
+    transform: translateX(-50%) scale(0.9);
+  }
+}
+@media screen and (max-height: 750px) {
+  .app.home .fixed-bar {
+    transform: translateX(-50%) scale(0.8);
+  }
+}
 .app.home .home-content {
   position: fixed;
   display: flex;
@@ -232,10 +242,17 @@ noscript span, .mobile span {
 }
 .app.home .home-content .wrapper {
   width: 1170px;
+  height: fit-content;
+  max-height: 100%;
 }
-@media screen and (max-width: 1250px) {
+@media screen and (max-height: 850px) {
   .app.home .home-content .wrapper {
-    width: 90%;
+    transform: scale(0.9);
+  }
+}
+@media screen and (max-height: 850px) {
+  .app.home .home-content .wrapper {
+    transform: scale(0.8);
   }
 }
 .app.home .app-icon {
@@ -302,9 +319,6 @@ noscript span, .mobile span {
 .app.home .widget.widget-2 {
   height: 100%;
   max-height: 370px;
-  /*@media screen and (max-width:1250px){
-      max-height:100%;
-  }*/
 }
 .app.home .widget.widget-map {
   cursor: pointer !important;
