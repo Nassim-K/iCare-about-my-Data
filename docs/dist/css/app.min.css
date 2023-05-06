@@ -244,12 +244,6 @@ noscript span, .mobile span {
 .app.home .app-icon.tiktok {
   background-image: url("../img/home/icons/tiktok.png");
 }
-.app.home .app-icon.facebook {
-  background-image: url("../img/home/icons/facebook.png");
-}
-.app.home .app-icon.instagram {
-  background-image: url("../img/home/icons/instagram.png");
-}
 .app.home .app-icon.mail {
   background-image: url("../img/home/icons/mail.png");
 }
@@ -267,9 +261,6 @@ noscript span, .mobile span {
 }
 .app.home .app-icon.safari {
   background-image: url("../img/home/icons/safari.png");
-}
-.app.home .app-icon.whatsapp {
-  background-image: url("../img/home/icons/whatsapp.png");
 }
 .app.home .app-icon.intro-video {
   background-image: url("../img/home/icons/video.png");
