@@ -146,6 +146,18 @@ function updateTimeWidget() {
     $(".minute").css("transform", `rotate(${minToDeg}deg)`);
     $(".hour").css("transform", `rotate(${hrToDeg}deg)`);
 }
+
+function getDateTime() {
+    const days = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
+    const months = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
+    const date = new Date();
+    const dayWeek = days[date.getDay()];
+    const dayMonth = date.getDate();
+    const monthYear = months[date.getMonth()];
+    const hour = date.getHours();
+    const mins = date.getMinutes();
+    return [`${dayWeek} ${dayMonth} ${monthYear}`, `${hour}:${mins < 10 ? "0" + mins : mins}`];
+}
   
 async function launchApp(app) {
     apps.forEach(app => {
@@ -173,10 +185,6 @@ async function launchApp(app) {
             opacity: "1",
         });
     }
-    Particles.init({
-        selector: '.background',
-        maxParticles: 0,
-    })
     $(app).show();
     switch (app) {
         case '.home':
@@ -189,15 +197,16 @@ async function launchApp(app) {
             });
             break;
         case '.welcome':
-            Particles.init({
-                selector: '.background',
-                maxParticles: 250,
-                connectParticles: true,
-                speed: .15,
-                minDistance: 140,
-                sizeVariations: 4,
-                color: '#ffffff',
-            });
+            console.log('ok');
+            var date = getDateTime();
+            console.log(date)
+            $('.date').html(date[0]);
+            $('.time').html(date[1]);
+            setInterval(() => {
+                var date = getDateTime();
+                $('.date').html(date[0]);
+                $('.time').html(date[1]);
+            }, 1000);
             break;
         case '.intro-video':
             player.seekTo(0);

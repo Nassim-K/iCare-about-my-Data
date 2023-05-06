@@ -80,10 +80,11 @@ noscript,.mobile{
     position: fixed;
     &.welcome{
         position:relative;
-        background-image:linear-gradient(to right top,#0092ff,#007efe,#0068f9,#0050f2,#0033e7);
-        background-size: 400% 400%;
-        animation: gradient 5s ease infinite;
+        background:unset;
         color:#fff;
+        display:flex;
+        justify-content:center;
+        align-items:center;
         .preloader {
             position:fixed;
             z-index:2;
@@ -113,57 +114,35 @@ noscript,.mobile{
                 }
             }
         }
-        @keyframes gradient {
-            0% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
-            100% {
-                background-position: 0% 50%;
-            }
-        }
-        .background{
-          position: absolute;
-          display: block;
-          top: 0px;
-          left: 0px;
-          z-index: 0;
-        }
         .welcome-container{
-            position:absolute;
-            z-index:1;
-            width:80%;
+            width:60%;
             height:fit-content;
-            padding:30px;
-            border-radius:20px;
-            background: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            top:50%;
-            left:50%;
-            transform:translate(-50%,-50%);
-            .welcome-text{
+            .date{
                 display:block;
                 width:fit-content;
                 margin:0 auto;
-                &.welcome-bienvenue{
-                    font-size:35px;
-                    margin-bottom:10px;
-                }
-                &.welcome-title{
-                    font-size:80px;
-                }
+                font-size:25px;
+                opacity:.85;
+            }
+            .time{
+                display:block;
+                width:fit-content;
+                margin:0 auto;
+                font-size:100px;
+                font-weight:600;
+                opacity:.85;
             }
             .row{
                 margin-top:50px;
+                gap:40px;
                 .col{
+                    background-color:rgba(255,255,255,.3);
+                    backdrop-filter:saturate(180%) blur(20px);
+                    box-shadow:0 0 10px rgba(0,0,0,.03);
+                    padding:20px;
+                    border-radius:20px;
                     i{
-                        font-size:120px;
+                        font-size:100px;
                         display:block;
                         width:fit-content;
                         margin:0 auto;
@@ -174,17 +153,20 @@ noscript,.mobile{
                 margin-top:20px;
                 text-align:center;
                 display:block;
-                font-size:25px;
+                font-size:18px;
                 &.sub{
-                    margin-top:30px;
+                    margin-top:150px;
+                    font-size:16px;
                 }
             }
             #welcome-start{
                 color:#fff;
-                background-color:$blue;
+                background-color:rgba(255,255,255,.3);
+                backdrop-filter:saturate(180%) blur(20px);
+                box-shadow:0 0 10px rgba(0,0,0,.03);
                 font-size:25px;
                 padding:12px 27px;
-                border:3px solid $blue;
+                border:3px solid transparent;
                 border-radius:99px;
                 cursor:pointer;
                 margin:50px auto 0 auto;
@@ -193,7 +175,10 @@ noscript,.mobile{
                 transition:border-color .3s ease-in-out,background-color .3s ease-in-out;
                 &:hover{
                     border-color:#fff;
-                    background-color:unset;
+                }
+                i{
+                    margin-left:10px;
+                    vertical-align:center;
                 }
             }
         }

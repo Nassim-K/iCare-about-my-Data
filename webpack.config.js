@@ -1,6 +1,6 @@
 module.exports = {
   entry: './assets/js/app.js',
-  mode: 'development',
+  mode: 'production',
   watch: true,
   output: {
     path: `${__dirname}/docs/dist`,
