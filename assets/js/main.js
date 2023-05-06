@@ -8,9 +8,11 @@ let location;
 let locationGranted = false;
 let microphoneGranted = false;
 
+let maps = { 'map': null, 'map1': null }
+
 var player;
 
-const apps = ['.welcome', '#intro-video', '.home', '.maps', '.tiktok', '.siri', '.google'];
+const apps = ['.welcome', '#intro-video', '.home', '.maps', '.tiktok', '.siri', '.google', '.nordvpn'];
 const welcomeBtn = document.getElementById("welcome-start");
 const backHomeBtn = $("#back-home-btn");
 
@@ -28,13 +30,13 @@ async function getLocation() {
                     latitude,
                     longitude,
                     address: browserAddress.address,
-                    city: browserAddress.city
+                    city: browserAddress.city,
                 },
                 ipLocation: {
                     latitude: ipAddress.latitude,
                     longitude: ipAddress.longitude,
                     address: ipAddress.address,
-                    city: ipAddress.city
+                    city: ipAddress.city,
                 }
             };
             resolve(location);
@@ -75,16 +77,7 @@ async function createMap(mapId) {
         }
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
         map.attributionControl.setPrefix('');
-        var newIcon = L.icon({
-            iconUrl: './dist/img/marker-icon.png',
-            iconSize: [50, 50],
-            iconAnchor: [25, 50],
-            popupAnchor: [1, -50],
-        });
-        var marker = L.marker([location.browserLocation.latitude, location.browserLocation.longitude], {
-            icon: newIcon
-        }).addTo(map);
-        marker.bindPopup("<b>Votre localisation " + (location.browserLocation.source === "ip" ? "IP" : "navigateur") + " : <br>" + location.browserLocation.address + "</b>", { autoClose: false, closeButton: false, closeOnClick: false }).openPopup();
+
         if (mapId == 'map1') {
             map.zoomControl.setPosition('topleft');
             L.control.scale().addTo(map);
@@ -96,9 +89,36 @@ async function createMap(mapId) {
             map.boxZoom.disable();
             map.keyboard.disable();
         }
+
+        changeMarkerLocation(map,"browser");
+        maps[mapId] = map;
     } catch (error) {
         console.error(error);
     }
+}
+
+function changeMarkerLocation(map, locationType) {
+    var locationData = locationType === "ip" ? location.ipLocation : location.browserLocation;
+    var newLatLng = [locationData.latitude, locationData.longitude];
+
+    // rm old marker
+    map.eachLayer(function (layer) {
+        if (layer instanceof L.Marker) {
+            map.removeLayer(layer);
+        }
+    });
+
+    // add new marker
+    map.panTo(newLatLng);
+    var marker = L.marker(newLatLng, {
+        icon: L.icon({
+            iconUrl: './dist/img/marker-icon.png',
+            iconSize: [50, 50],
+            iconAnchor: [25, 50],
+            popupAnchor: [1, -50],
+        })
+    }).addTo(map);
+    marker.bindPopup("<b>Votre localisation " + (locationType === "ip" ? "IP" : "GPS") + " (approximative) : <br>" + locationData.address + "</b>", { autoClose: false, closeButton: false, closeOnClick: false }).openPopup();
 }
 
 async function createWeatherWidget() {
@@ -140,10 +160,12 @@ async function launchApp(app) {
     });
     if (['.welcome', '#intro-video', '.intro-video', '.home'].includes(app)) {
         $(backHomeBtn).css({
-            bottom: "-100%",
+            bottom: "5px",
             opacity: "0",
-            display: "none"
         });
+        setTimeout(() => {
+            $(backHomeBtn).hide();
+        }, 300);
     } else {
         $(backHomeBtn).show();
         $(backHomeBtn).css({
@@ -182,7 +204,27 @@ async function launchApp(app) {
             player.playVideo();
             break;
         case '.maps':
-            createMap('map1');
+            if (!maps['map1']) {
+                createMap('map1');
+            }
+            $('input#gps').on('change', function () {
+                if (this.checked) {
+                    $('input#ip').prop('checked', false);
+                    changeMarkerLocation(maps['map1'], "browser");
+                } else {
+                    $('input#ip').prop('checked', true);
+                    changeMarkerLocation(maps['map1'], "ip");
+                }
+            });
+            $('input#ip').on('change', function () {
+                if (this.checked) {
+                    $('input#gps').prop('checked', false);
+                    changeMarkerLocation(maps['map1'], "ip");
+                } else {
+                    $('input#gps').prop('checked', true);
+                    changeMarkerLocation(maps['map1'], "browser");
+                }
+            });
             break;
         case '.siri':
             if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
@@ -277,7 +319,7 @@ $(document).ready(function () {
             })
             .catch(function (err) {
                 console.error('Erreur : Impossible d\'activer le microphone', err);
-                alert('Pour le bon déroulement du Webdoc, veuillez activer l\'utilisation du microphone sur votre navigateur.')
+                alert('Pour le bon déroulement du Webdoc, veuillez activer l\'utilisation du microphone sur votre navigateur (attendre un instant si vous venez de les autoriser).')
             });
 
         welcomeBtn.addEventListener("click", function () {

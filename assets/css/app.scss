@@ -437,20 +437,94 @@ noscript,.mobile{
         }
     }
     &.maps{
-        .sidepanel{
-            position:absolute;
-            z-index:99999;
-            top:20px;
-            right:20px;
-            bottom:20px;
-            width:20%;
-            background-color:#fff;
-            box-shadow:0 0 10px rgba(0,0,0,.3);
-            border-radius:10px;
-            padding:20px;
+        .maps-title{
+            display:block;
+            font-size:30px;
+            margin:0 auto 20px auto;
+            width:fit-content;
+        }
+        .title{
+            display:flex;
+            flex-direction:row;
+            justify-content:space-between;
+            align-items:end;
+            span{
+                font-size:25px;
+            }
+            input{
+                position: relative;
+                display: block;
+                cursor: pointer;
+                &:before {
+                    content: '';
+                    display: block;
+                    position: absolute;
+                    top: -14px;
+                    left: -23px;
+                    height: 28px;
+                    width: 46px;
+                    background-color: #bbb;
+                    border-radius: 14px;
+                    transition: background-color .2s;
+                    cursor: pointer;
+                }
+                &:after {
+                    content: '';
+                    display: block;
+                    position: absolute;
+                    transition: transform .2s, -webkit-transform .2s;
+                    top: -12px;
+                    left: -21px;
+                    border-radius: 12px;
+                    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
+                    background-color: #fff;
+                    height: 24px;
+                    width: 24px;
+                    cursor: pointer;
+                }
+                &:checked {
+                    &:before {
+                        background-color: #4cd764;
+                    }
+                    &:after {
+                        transform: translateX(18px);
+                        -webkit-transform: translateX(18px);
+                    }
+                }
+            }
+        }
+        #map1{
+            width:100%;
         }
     }
     &.tiktok{
+        .flex{
+            display:flex;
+            flex-direction:row;
+            justify-content:space-between;
+            align-items:center;
+            img{
+                height:100%;
+            }
+        }
+    }
+    &.siri{
+        background-color:red;
+    }
+    &.google,&.nordvpn{
+        div {
+            position: relative;
+            height: 100vh;
+            iframe {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+            }
+        }
+    }
+    &.sidepanel{
         display:flex;
         flex-direction:row;
         .content{
@@ -466,31 +540,6 @@ noscript,.mobile{
             height:100%;
             background-color:#fff;
             padding:20px;
-            .flex{
-                display:flex;
-                flex-direction:row;
-                justify-content:space-between;
-                align-items:center;
-                img{
-                    height:100%;
-                }
-            }
-        }
-    }
-    &.siri{
-        background-color:red;
-    }
-    &.google{
-        div {
-            position: relative;
-            height: 100vh;
-            iframe {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-            }
         }
     }
 }

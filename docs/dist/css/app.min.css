@@ -438,23 +438,91 @@ noscript span, .mobile span {
   width: 4px;
   background: #18191a;
 }
-.app.maps .sidepanel {
-  position: absolute;
-  z-index: 99999;
-  top: 20px;
-  right: 20px;
-  bottom: 20px;
-  width: 20%;
-  background-color: #fff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  border-radius: 10px;
-  padding: 20px;
+.app.maps .maps-title {
+  display: block;
+  font-size: 30px;
+  margin: 0 auto 20px auto;
+  width: fit-content;
 }
-.app.tiktok {
+.app.maps .title {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: end;
+}
+.app.maps .title span {
+  font-size: 25px;
+}
+.app.maps .title input {
+  position: relative;
+  display: block;
+  cursor: pointer;
+}
+.app.maps .title input:before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: -14px;
+  left: -23px;
+  height: 28px;
+  width: 46px;
+  background-color: #bbb;
+  border-radius: 14px;
+  transition: background-color 0.2s;
+  cursor: pointer;
+}
+.app.maps .title input:after {
+  content: "";
+  display: block;
+  position: absolute;
+  transition: transform 0.2s, -webkit-transform 0.2s;
+  top: -12px;
+  left: -21px;
+  border-radius: 12px;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
+  background-color: #fff;
+  height: 24px;
+  width: 24px;
+  cursor: pointer;
+}
+.app.maps .title input:checked:before {
+  background-color: #4cd764;
+}
+.app.maps .title input:checked:after {
+  transform: translateX(18px);
+  -webkit-transform: translateX(18px);
+}
+.app.maps #map1 {
+  width: 100%;
+}
+.app.tiktok .flex {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.app.tiktok .flex img {
+  height: 100%;
+}
+.app.siri {
+  background-color: red;
+}
+.app.google div, .app.nordvpn div {
+  position: relative;
+  height: 100vh;
+}
+.app.google div iframe, .app.nordvpn div iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.app.sidepanel {
   display: flex;
   flex-direction: row;
 }
-.app.tiktok .content {
+.app.sidepanel .content {
   width: 75%;
   height: 100%;
   overflow-y: auto;
@@ -462,32 +530,9 @@ noscript span, .mobile span {
   display: flex;
   align-items: center;
 }
-.app.tiktok .sidepanel {
+.app.sidepanel .sidepanel {
   width: calc(25% + 40px);
   height: 100%;
   background-color: #fff;
   padding: 20px;
-}
-.app.tiktok .sidepanel .flex {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-}
-.app.tiktok .sidepanel .flex img {
-  height: 100%;
-}
-.app.siri {
-  background-color: red;
-}
-.app.google div {
-  position: relative;
-  height: 100vh;
-}
-.app.google div iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
 }
