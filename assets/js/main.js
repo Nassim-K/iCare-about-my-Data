@@ -264,8 +264,9 @@ $(document).ready(function () {
             bottom: '100%',
             opacity: '0'
         }, 1000);
-
-        $('.preloader').hide();
+        setTimeout(function () {
+            $('.preloader').hide();
+        }, 1000);
 
         getLocation();
 
