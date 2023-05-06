@@ -5,6 +5,9 @@ import 'leaflet.markercluster';
 
 let location;
 
+let locationGranted = false;
+let microphoneGranted = false;
+
 var player;
 
 const apps = ['.welcome', '#intro-video', '.home', '.maps', '.tiktok', '.siri', '.google'];
@@ -35,6 +38,7 @@ async function getLocation() {
                 }
             };
             resolve(location);
+            locationGranted = true;
         } catch (error) {
             alert('Pour le bon déroulement du Webdoc, veuillez activer la localisation de votre navigateur.');
             reject("Une erreur est survenue lors de la récupération de la position.");
@@ -203,11 +207,7 @@ async function launchApp(app) {
                     console.log("La reconnaissance vocale s'est terminée.");
                 }
 
-                //const startButton = document.getElementById("start-button");
-
-                //welcomeBtn.addEventListener("click", function() {
                 recognition.start();
-                //});
 
             } else {
                 alert("La reconnaissance vocale n'est pas supportée sur ce navigateur.");
@@ -232,7 +232,7 @@ window.onYouTubeIframeAPIReady = function () {
 }
 
 function onPlayerReady() {
-    $(document).trigger('readyEvent');
+    console.log('ready');
 }
 
 var initialized = false;
@@ -250,7 +250,6 @@ function onPlayerStateChange(event) {
 }
 
 $(document).ready(function () {
-
     // bloquer clic droit
     $(document).bind("contextmenu", function (e) {
         e.preventDefault();
@@ -258,50 +257,47 @@ $(document).ready(function () {
 
     // launch loader + app
     launchApp('.welcome');
-
-    // prevent youtube bug
-    var isReadyEventTriggered = false;
-    var reloadTimeout = setTimeout(function() {
-        if (!isReadyEventTriggered) {
-            history.go(0);
-        }
-    }, 5000);
     
-    $(document).one('readyEvent', function () {
-        isReadyEventTriggered = true;
-        clearTimeout(reloadTimeout);
-        
+    $(window).on('load', function () {
         $('.preloader .loader').fadeOut();
         $('.preloader').animate({
             bottom: '100%',
             opacity: '0'
         }, 1000);
 
+        $('.preloader').hide();
+
         getLocation();
 
         // on demande le micro
         navigator.mediaDevices.getUserMedia({ audio: true })
+            .then(function (stream) {
+                microphoneGranted = true;
+            })
             .catch(function (err) {
                 console.error('Erreur : Impossible d\'activer le microphone', err);
                 alert('Pour le bon déroulement du Webdoc, veuillez activer l\'utilisation du microphone sur votre navigateur.')
             });
 
         welcomeBtn.addEventListener("click", function () {
-            // Lancement prmeière fois de intro qui se charge d'initialiser home et widgets
-            launchApp('.intro-video');
+            if (locationGranted && microphoneGranted) {
+                // Lancement prmeière fois de intro qui se charge d'initialiser home et widgets
+                launchApp('.intro-video');
 
-            $(".app-icon:not(.inactive,.link)").on('click', function () {
-                launchApp("." + $(this).attr('class').replace('app-icon ', ''));
-            });
+                $(".app-icon:not(.inactive,.link)").on('click', function () {
+                    launchApp("." + $(this).attr('class').replace('app-icon ', ''));
+                });
 
-            $(".widget.widget-map").on('click', function () {
-                launchApp(".maps");
-            });
+                $(".widget.widget-map").on('click', function () {
+                    launchApp(".maps");
+                });
 
-            $(backHomeBtn).on('click', function () {
-                launchApp('.home');
-            });
+                $(backHomeBtn).on('click', function () {
+                    launchApp('.home');
+                });
+            } else {
+                alert('Pour commencer, veuillez autoriser l\'accès à la géolocalisation et au microphone sur votre navigateur.');
+            }
         });
     });
-
 });
