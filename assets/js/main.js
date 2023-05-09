@@ -149,7 +149,7 @@ function updateTimeWidget() {
 
 function getDateTime() {
     const days = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
-    const months = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
+    const months = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
     const date = new Date();
     const dayWeek = days[date.getDay()];
     const dayMonth = date.getDate();
