@@ -499,7 +499,44 @@ noscript,.mobile{
         }
     }
     &.siri{
-        background-color:red;
+        .content{
+            background-image:url('../img/siri/background.png');
+            background-size:cover;
+            background-position:center;
+            position:relative;
+            #siri-start{
+                position:absolute;
+                top:20%;
+                left:50%;
+                transform:translateX(-50%);
+                font-size:25px;
+                padding:15px 20px;
+                border-radius:99px;
+                color:#fff;
+                border:unset;
+                cursor:pointer;
+                background: linear-gradient(-45deg, #b266c7, #6fc884, #23a6d5, #ffffff);
+                background-size: 400% 400%;
+                animation: gradient 10s ease infinite;
+            }
+            @keyframes gradient {
+                0% {
+                    background-position: 0% 50%;
+                }
+                50% {
+                    background-position: 100% 50%;
+                }
+                100% {
+                    background-position: 0% 50%;
+                }
+            }
+        }
+        .sidepanel{
+            span{
+                font-size:30px;
+                margin-bottom:20px;
+            }
+        }
     }
     &.google,&.nordvpn{
         div {
@@ -530,6 +567,7 @@ noscript,.mobile{
             height:100%;
             background-color:#fff;
             padding:20px;
+            overflow-y:auto;
         }
     }
 }
