@@ -6,7 +6,6 @@ import 'leaflet.markercluster';
 let location;
 
 let locationGranted = false;
-let microphoneGranted = false;
 
 let maps = { 'map': null, 'map1': null }
 
@@ -321,18 +320,8 @@ $(document).ready(function () {
 
         getLocation();
 
-        // on demande le micro
-        navigator.mediaDevices.getUserMedia({ audio: true })
-            .then(function (stream) {
-                microphoneGranted = true;
-            })
-            .catch(function (err) {
-                console.error('Erreur : Impossible d\'activer le microphone', err);
-                alert('Pour le bon déroulement du Webdoc, veuillez activer l\'utilisation du microphone sur votre navigateur (attendre un instant si vous venez de les autoriser).')
-            });
-
         welcomeBtn.addEventListener("click", function () {
-            if (locationGranted && microphoneGranted) {
+            if (locationGranted) {
                 // Lancement prmeière fois de intro qui se charge d'initialiser home et widgets
                 launchApp('.intro-video');
 
@@ -348,7 +337,7 @@ $(document).ready(function () {
                     launchApp('.home');
                 });
             } else {
-                alert('Pour commencer, veuillez autoriser l\'accès à la géolocalisation et au microphone sur votre navigateur.');
+                alert('Pour commencer, veuillez autoriser l\'accès à la géolocalisation sur votre navigateur.');
             }
         });
     });
