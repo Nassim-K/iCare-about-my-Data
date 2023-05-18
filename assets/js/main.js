@@ -270,7 +270,7 @@ window.onYouTubeIframeAPIReady = function () {
     player = new YT.Player('player', {
         height: '100%',
         width: '100%',
-        videoId: "FUKmyRLOlAA",
+        videoId: "ZuiS7hwKFRc",
         playerVars: {
             'controls': 0
         },
