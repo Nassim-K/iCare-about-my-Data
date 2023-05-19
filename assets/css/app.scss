@@ -73,6 +73,45 @@ noscript,.mobile{
         vertical-align:center;
     }
 }
+.welcome-popup{
+    font-size:18px;
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    z-index:9;
+    background-color:rgba(255,255,255,.7);
+    backdrop-filter:saturate(180%) blur(30px);
+    box-shadow:0 0 10px rgba(0,0,0,.03);
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,.1);
+    overflow:hidden;
+    display:none;
+    div{
+        padding:20px;
+        .popup-title{
+            font-size:25px;
+            display:block;
+            width:fit-content;
+            margin:0 auto;
+            font-weight:bold;
+        }
+    }
+    #close-popup{
+        display:block;
+        padding:15px;
+        text-align:center;
+        border-top:1px solid rgba(0,0,0,.1);
+        color:$blue;
+        font-size:20px;
+        cursor:pointer;
+        i{
+            margin-right:5px;
+            font-size:15px;
+            vertical-align:center;
+        }
+    }
+}
 .app{
     background-color:purple;
     width: 100%;
@@ -487,58 +526,7 @@ noscript,.mobile{
             width:100%;
         }
     }
-    &.tiktok{
-        .flex{
-            display:flex;
-            flex-direction:row;
-            justify-content:space-between;
-            align-items:center;
-            img{
-                height:100%;
-            }
-        }
-    }
-    &.siri{
-        .content{
-            background-image:url('../img/siri/background.png');
-            background-size:cover;
-            background-position:center;
-            position:relative;
-            #siri-start{
-                position:absolute;
-                top:20%;
-                left:50%;
-                transform:translateX(-50%);
-                font-size:25px;
-                padding:15px 20px;
-                border-radius:99px;
-                color:#fff;
-                border:unset;
-                cursor:pointer;
-                background: linear-gradient(-45deg, #b266c7, #6fc884, #23a6d5, #ffffff);
-                background-size: 400% 400%;
-                animation: gradient 10s ease infinite;
-            }
-            @keyframes gradient {
-                0% {
-                    background-position: 0% 50%;
-                }
-                50% {
-                    background-position: 100% 50%;
-                }
-                100% {
-                    background-position: 0% 50%;
-                }
-            }
-        }
-        .sidepanel{
-            span{
-                font-size:30px;
-                margin-bottom:20px;
-            }
-        }
-    }
-    &.google,&.nordvpn{
+    &.google,&.nordvpn,&.tiktok,&.siri{
         div {
             position: relative;
             height: 100vh;
@@ -550,6 +538,23 @@ noscript,.mobile{
                 height: 100%;
             }
         }
+    }
+    &.siri{
+        background-color:#171717;
+        overflow-y:auto;
+        iframe{
+            height:1600px !important;
+            padding-bottom:80px;
+        }
+    }
+    &.google{
+        background-color:#f2f4fc;
+    }
+    &.tiktok{
+        background-color:#171717;
+    }
+    &.nordvpn{
+        background-color:#fff;
     }
     &.sidepanel{
         display:flex;

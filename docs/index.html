@@ -9,6 +9,24 @@
     <noscript><span>Veuillez activer JavaScript sur votre navigateur pour continuer.</span></noscript>
     <div class="mobile"><span>Ce site n'est pas conçu pour les mobiles. Veuillez l'utiliser sur ordinateur.</span></div>
     <span id="back-home-btn" style="display:none;"><i class="bi bi-x-lg"></i>Quitter l'application</span>
+    <div class="welcome-popup">
+        <div>
+            <span class="popup-title">Bienvenue sur iCare about my Data</span>
+            <p>
+                Webdoc réalisé dans le cadre du concours de webdoc de l'IUT Informatique Paul Sabatier.<br>
+                Professeurs : Mme TINE &amp; Mme RASPAUD<br><br>
+                Réalisé par :
+                <ul>
+                    <li>SILVESTRE Thomas (Cartes, Siri)</li>
+                    <li>TERAN-GODOY Jesus (Tiktok)</li>
+                    <li>JESOPHE-SANCHEZ Mehdi (Images 3D)</li>
+                    <li>DELPECH Justin (NordVPN, voix off)</li>
+                    <li>KHOUJANE Nassim (Développement, intro, Google)</li>
+                </ul>
+            </p>
+        </div>
+        <span id="close-popup"><i class="bi bi-x-lg"></i>Fermer</span>
+    </div>
     <div class="app welcome">
         <div class="preloader">
             <div class="loader"></div>
@@ -19,18 +37,18 @@
             <div class="row">
                 <div class="col">
                     <i class="bi bi-code-slash"></i>
-                    <span class="welcome-subtext">Webdoc optimisé pour Chrome, Edge, et Opera. Sur ordinateur uniquement.</span>
+                    <span class="welcome-subtext">Webdoc optimisé pour Chrome, sur ordinateur uniquement.</span>
                 </div>
                 <div class="col">
                     <i class="bi bi-geo-alt"></i>
                     <span class="welcome-subtext">Autorisez l'accès à votre localisation<br>(message en haut à gauche).</span>
                 </div>
                 <div class="col">
-                    <i class="bi bi-mic"></i>
-                    <span class="welcome-subtext">Autorisez l'accès à votre micro<br>et vérifiez son fonctionnement.</span>
+                    <i class="bi bi-volume-up"></i>
+                    <span class="welcome-subtext">Vérifiez le bon fonctionnement<br>de votre système audio.</span>
                 </div>
             </div>
-            <span class="welcome-subtext sub">Vérifiez le fonctionnement de votre casque et micro.<br>Vos données de localisation et de micro ne sont transmises à aucun tiers.</span>
+            <span class="welcome-subtext sub">Vos données de localisation ne sont transmises à aucun tiers.</span>
             <button id="welcome-start">Commencer<i class="bi bi-chevron-right"></i></button>
         </div>
     </div>
@@ -253,38 +271,17 @@
             <p>La localisation par Wi-Fi utilise les points d'accès Wi-Fi disponibles pour estimer la position d'un appareil. En se basant sur la force des signaux Wi-Fi provenant des points d'accès environnants, l'appareil peut approximer sa position. Cependant, la localisation par Wi-Fi peut être moins précise que le GPS ou la géolocalisation par GSM en raison de la disponibilité des points d'accès et des éventuelles interférences. Elle est couramment utilisée dans les environnements urbains et les applications nécessitant une localisation en intérieur où le GPS peut être moins fiable.<br>A noter : Google utilise des voitures qui parcourent les villes pour prendre des photos utilisables dans Google Street View et pour obtenir une liste de toutes les connexions Wi-Fi qu’ils détectent. Ces données sont associées à la géolocalisation de la voiture et servent justement à renforcer la puissance de la géolocalisation Wi-Fi.</p>
         </div>
     </div>
-    <div class="app tiktok sidepanel">
-        <div class="content">
-            <div style="width: 100%;"><div style="position: relative; padding-bottom: 56.25%; padding-top: 0; height: 0;"><iframe title="Carte tiktok" frameborder="0" width="1200px" height="675px" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://view.genial.ly/6426b36898f60500199c58c2" type="text/html" allowscriptaccess="always" allowfullscreen="true" scrolling="yes" allownetworking="all"></iframe> </div> </div>
-        </div>
-        <div class="sidepanel">
-            <div class="flex">
-                <img src="./dist/img/tiktok/user-meta.jpg" draggable="false">
-                <img src="./dist/img/tiktok/follow.jpg" draggable="false">
-            </div>
-            <div class="description">
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quis nisi quam quidem ducimus exercitationem minima praesentium quisquam nihil laudantium, dolorem consequatur ex voluptatem! Dolor quis veritatis sit minus porro. Sint.</p>
-            </div>
-            <div class="flex">
-                <img src="./dist/img/tiktok/stats.jpg" draggable="false">
-                <img src="./dist/img/tiktok/share.jpg" draggable="false">
-            </div>
-        </div>
+    <div class="app tiktok">
+        <iframe title="Carte tiktok" frameborder="0" width="1200px" height="675px" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://view.genial.ly/6426b36898f60500199c58c2" type="text/html" allowscriptaccess="always" allowfullscreen="true" scrolling="yes" allownetworking="all"></iframe>
     </div>
-    <div class="app siri sidepanel">
-        <div class="content">
-            <button id="siri-start">Dis, Siri</button>
-        </div>
-        <div class="sidepanel">
-            <span>Title</span>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis nisi quam quidem ducimus exercitationem minima praesentium quisquam nihil laudantium, dolorem consequatur ex voluptatem! Dolor quis veritatis sit minus porro. Sint.</p>
-        </div>
+    <div class="app siri">
+        <iframe title="Assistant Vocal" frameborder="0" width="800px" height="1600px" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://view.genial.ly/64675ba3dbccea0012f120b2" type="text/html" allowscriptaccess="always" allowfullscreen="true" scrolling="yes" allownetworking="all"></iframe>
     </div>
     <div class="app google">
         <iframe title="Google Données Personnelles" frameborder="0" width="1200" height="675" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://view.genial.ly/64555ba0434ce10018ff2bb6" type="text/html" allowscriptaccess="always" allowfullscreen="true" scrolling="yes" allownetworking="all"></iframe>
     </div>
     <div class="app nordvpn">
-        <iframe title="CHALK & BLACKBOARD PRESENTATION" frameborder="0" width="1200px" height="675px" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://view.genial.ly/6451253bc96926001135c167" type="text/html" allowscriptaccess="always" allowfullscreen="true" scrolling="yes" allownetworking="all"></iframe>
+        <iframe title="NordVPN présentation" frameborder="0" width="1200px" height="675px" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://view.genial.ly/645910383fb768001ac8e8d2" type="text/html" allowscriptaccess="always" allowfullscreen="true" scrolling="yes" allownetworking="all"></iframe>
     </div>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-RW2WDMB34D"></script>
     <script>

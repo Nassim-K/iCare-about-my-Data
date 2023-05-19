@@ -294,6 +294,10 @@ function onPlayerStateChange(event) {
             createWeatherWidget();
             setInterval(updateTimeWidget, 1000);
             updateTimeWidget();
+            $('.welcome-popup').fadeIn();
+            $('.welcome-popup #close-popup').on('click', function () {
+                $('.welcome-popup').fadeOut();
+            });
             initialized = true;
         }
     }
