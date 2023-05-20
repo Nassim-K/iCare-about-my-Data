@@ -234,7 +234,7 @@ async function launchApp(app) {
                 }
             });
             break;
-        case '.siri':
+        /*case '.siri':
             if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
                 const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
 
@@ -261,7 +261,7 @@ async function launchApp(app) {
 
             } else {
                 alert("La reconnaissance vocale n'est pas supportée sur ce navigateur.");
-            }
+            }*/
     }
 }
 
