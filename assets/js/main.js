@@ -66,33 +66,37 @@ async function getIpAddress() {
 }
 
 async function createMap(mapId) {
-    try {
-        if (mapId == 'map') {
-            var map = L.map(mapId, {
-                zoomControl: false
-            }).setView([location.browserLocation.latitude, location.browserLocation.longitude], 13);
-        } else {
-            var map = L.map(mapId).setView([location.browserLocation.latitude, location.browserLocation.longitude], 13);
-        }
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-        map.attributionControl.setPrefix('');
+    if (!locationGranted && mapId == 'map') {
+        $('#map').html("<span>Pas de localisation :(</span>");
+    } else {
+        try {
+            if (mapId == 'map') {
+                var map = L.map(mapId, {
+                    zoomControl: false
+                }).setView([location.browserLocation.latitude, location.browserLocation.longitude], 13);
+            } else {
+                var map = L.map(mapId).setView([location.browserLocation.latitude, location.browserLocation.longitude], 13);
+            }
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+            map.attributionControl.setPrefix('');
 
-        if (mapId == 'map1') {
-            map.zoomControl.setPosition('topleft');
-            L.control.scale().addTo(map);
-        } else {
-            map.dragging.disable();
-            map.touchZoom.disable();
-            map.doubleClickZoom.disable();
-            map.scrollWheelZoom.disable();
-            map.boxZoom.disable();
-            map.keyboard.disable();
-        }
+            if (mapId == 'map1') {
+                map.zoomControl.setPosition('topleft');
+                L.control.scale().addTo(map);
+            } else {
+                map.dragging.disable();
+                map.touchZoom.disable();
+                map.doubleClickZoom.disable();
+                map.scrollWheelZoom.disable();
+                map.boxZoom.disable();
+                map.keyboard.disable();
+            }
 
-        changeMarkerLocation(map,"browser");
-        maps[mapId] = map;
-    } catch (error) {
-        console.error(error);
+            changeMarkerLocation(map, "browser");
+            maps[mapId] = map;
+        } catch (error) {
+            console.error(error);
+        }
     }
 }
 
@@ -212,27 +216,32 @@ async function launchApp(app) {
             player.playVideo();
             break;
         case '.maps':
-            if (!maps['map1']) {
-                createMap('map1');
+            if (locationGranted) {
+                if (!maps['map1']) {
+                    createMap('map1');
+                }
+                $('input#gps').on('change', function () {
+                    if (this.checked) {
+                        $('input#ip').prop('checked', false);
+                        changeMarkerLocation(maps['map1'], "browser");
+                    } else {
+                        $('input#ip').prop('checked', true);
+                        changeMarkerLocation(maps['map1'], "ip");
+                    }
+                });
+                $('input#ip').on('change', function () {
+                    if (this.checked) {
+                        $('input#gps').prop('checked', false);
+                        changeMarkerLocation(maps['map1'], "ip");
+                    } else {
+                        $('input#gps').prop('checked', true);
+                        changeMarkerLocation(maps['map1'], "browser");
+                    }
+                });
+            } else {
+                launchApp('.home');
+                alert('Pour utiliser cette application, veuillez autoriser l\'accès à la géolocalisation sur votre navigateur.');
             }
-            $('input#gps').on('change', function () {
-                if (this.checked) {
-                    $('input#ip').prop('checked', false);
-                    changeMarkerLocation(maps['map1'], "browser");
-                } else {
-                    $('input#ip').prop('checked', true);
-                    changeMarkerLocation(maps['map1'], "ip");
-                }
-            });
-            $('input#ip').on('change', function () {
-                if (this.checked) {
-                    $('input#gps').prop('checked', false);
-                    changeMarkerLocation(maps['map1'], "ip");
-                } else {
-                    $('input#gps').prop('checked', true);
-                    changeMarkerLocation(maps['map1'], "browser");
-                }
-            });
             break;
         /*case '.siri':
             if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
@@ -325,7 +334,7 @@ $(document).ready(function () {
         getLocation();
 
         welcomeBtn.addEventListener("click", function () {
-            if (locationGranted) {
+            //if (locationGranted) {
                 // Lancement prmeière fois de intro qui se charge d'initialiser home et widgets
                 launchApp('.intro-video');
 
@@ -340,9 +349,9 @@ $(document).ready(function () {
                 $(backHomeBtn).on('click', function () {
                     launchApp('.home');
                 });
-            } else {
+            /*} else {
                 alert('Pour commencer, veuillez autoriser l\'accès à la géolocalisation sur votre navigateur.');
-            }
+            }*/
         });
     });
 });
