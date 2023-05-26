@@ -281,7 +281,7 @@ window.onYouTubeIframeAPIReady = function () {
         width: '100%',
         videoId: "ZuiS7hwKFRc",
         playerVars: {
-            'controls': 0
+            //'controls': 0
         },
         events: {
             //'onReady': onPlayerReady,
